@@ -1,0 +1,1186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="mainLayout">
+	<head>
+		<title>Travian au2</title>
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="content-type"	content="text/html; charset=UTF-8" />
+<meta name="content-language" content="au" />
+<link href="//gpack.travian.com/8aeeca8f/lang/au/compact.css?4d7b7" rel="stylesheet" type="text/css" /><link href="//gpack.travian.com/8aeeca8f/lang/au/lang.css?4d7b7" rel="stylesheet" type="text/css" /><link href="img/travian_basics.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="crypt.js?1464095740"></script>
+<script type="text/javascript">
+Travian.Translation.add(
+{
+	'allgemein.anleitung':	'Instructions',
+	'allgemein.cancel':	'cancel',
+	'allgemein.ok':	'OK',
+	'allgemein.close':	'close',
+	'cropfinder.keine_ergebnisse': 'No search results found.'
+});
+Travian.applicationId = 'T4.4 Game';
+Travian.Game.version = '4.4';
+Travian.Game.worldId = 'au22';
+Travian.Game.speed = 1;
+
+Travian.Templates = {};
+	Travian.Templates.ButtonTemplate = "<button >\n\t<div class=\"button-container addHoverClick\">\n\t\t<div class=\"button-background\">\n\t\t\t<div class=\"buttonStart\">\n\t\t\t\t<div class=\"buttonEnd\">\n\t\t\t\t\t<div class=\"buttonMiddle\"><\/div>\n\t\t\t\t<\/div>\n\t\t\t<\/div>\n\t\t<\/div>\n\t\t<div class=\"button-content\"><\/div>\n\t<\/div>\n<\/button>\n";
+
+</script><script type="text/javascript">
+	Travian.Game.eventJamHtml = '<a href="http://t4.answers.travian.com.au/index.php?aid=249#go2answer" target="blank" title="Travian Answers"><span class="c0 t">0:00:0</span>?</a>'.unescapeHtml();
+</script>
+
+<script type="text/javascript">
+window.addEvent('domready', function() {
+		Travian.Form.UnloadHelper.message = 'You have made changes. Do you really want to leave this page?';
+});
+</script>	</head>
+	<body class="v35 webkit chrome village1 perspectiveResources  ltr">
+		
+		<script type="text/javascript">
+			window.ajaxToken = '45686067e3094228678ce9697b442448';
+		</script>
+				<div id="background">
+							<div id="headerBar"></div>
+									<div id="bodyWrapper">
+								<img style="filter:chroma();" src="img/x.gif" id="msfilter" alt="" />
+
+				<div id="header">
+	<a id="logo" href="http://www.travian.com.au/" target="_blank" title="Travian" ></a>
+
+	
+	
+			<ul id="navigation">
+	<li id="n1" class="villageResources">
+		<a class="active" href="dorf1.php" accesskey="1" title="Resources||"></a>
+	</li>
+	<li id="n2" class="villageBuildings">
+		<a class="inactive" href="dorf2.php" accesskey="2" title="Buildings||"></a>
+	</li>
+	<li id="n3" class="map">
+		<a href="karte.php" accesskey="3" title="Map||"></a>
+	</li>
+	<li id="n4" class="statistics">
+		<a href="statistiken.php" accesskey="4" title="Statistics||"></a>
+	</li>
+	<li id="n5" class="reports">
+		<a href="berichte.php" accesskey="5" title="Reports||New reports: 0"></a>
+			</li>
+	<li id="n6" class="messages">
+		<a href="nachrichten.php" accesskey="6" title="Messages||New messages: 0"></a>
+			</li>
+	<li id="n7" class="gold">
+		<a href="#" accesskey="7" title="Buy gold" onclick="window.fireEvent('startPaymentWizard', {}); this.blur(); return false;"></a>
+	</li>
+	<li class="clear"> </li>
+</ul>
+
+<script type="text/javascript">
+	window.addEvent('domready', function()
+	{
+		Travian.Game.Layout.goldButtonAnimation(true);
+	});
+</script>
+	
+			<div id="goldSilver">
+		<div class="gold">
+			<img src="img/x.gif" alt="Gold" title="Gold" class="gold" onclick="window.fireEvent('startPaymentWizard', {data:{activeTab: 'pros'}}); return false;" />
+			<span class="ajaxReplaceableGoldAmount">0</span>
+		</div>
+		<div class="silver">
+			<img src="img/x.gif" alt="Silver" title="Silver" class="silver" onclick="window.fireEvent('startPaymentWizard', {data:{activeTab: 'pros'}}); return false;" />
+			<span class="ajaxReplaceableSilverAmount">0</span>
+		</div>
+	</div>	
+			<ul id="outOfGame" class="LTR">
+		<li class="profile">
+		<a href="spieler.php" title="Profile||Edit profile description.">
+			<img src="img/x.gif" alt="Profile" />
+		</a>
+	</li>
+	<li class="options">
+					<a href="options.php" title="Options||Edit account settings.">
+				<img src="img/x.gif" alt="Options" />
+			</a>
+			</li>
+	<li class="forum">
+		<a target="_blank" href="http://forum.travian.com.au" title="Forum||Meet other players on our external forum.">
+			<img src="img/x.gif" alt="Forum" />
+		</a>
+	</li>
+	<li class="help">
+		<a href="help.php" title="Help||Manuals, Answers and Support">
+			<img src="img/x.gif" alt="Help" />
+		</a>
+	</li>
+		<li class="logout ">
+		<a href="logout.php" title="Logout||Log out from the game.">
+			<img src="img/x.gif" alt="Logout" />
+		</a>
+	</li>
+	<li class="clear"> </li>
+</ul>
+<script type="text/javascript">
+$$('#outOfGame li.logout a').addEvent('click', function(){
+	Travian.WindowManager.getWindows().each(function($dialog){
+		Travian.WindowManager.unregister($dialog);
+	});
+});
+</script>	</div>
+				<div id="center">
+
+					<div id="sidebarBeforeContent" class="sidebar beforeContent">
+					
+<div id="sidebarBoxHero" class="sidebarBox toggleable expanded ">
+	<div class="sidebarBoxBaseBox">
+		<div class="baseBox baseBoxTop">
+			<div class="baseBox baseBoxBottom">
+				<div class="baseBox baseBoxCenter"></div>
+			</div>
+		</div>
+	</div>
+	<div class="sidebarBoxInnerBox">
+		<div class="innerBox header ">
+			<button id="heroImageButton" onclick="window.location.href='hero_inventory.php';" class="heroImageButton" type="button" title="Hero overview||Hero is currently in village Buckyx`s village.">
+	<img class="heroImage" src="hero_image.php?uid=2692&size=sideinfo&5c7868ad4b5c1ed2bbb4df5affcfb76b"  title="Hero" alt="Hero" />
+</button>
+<div class="playerName">
+	<img src="img/x.gif" class="nation nation3" alt="Gauls" title="Gauls" />
+	<a href="spieler.php" title="Player profile">Buckyx</a>
+</div>
+<button type="button" id="button5760402aed5a2"	class="layoutButton auctionWhite green  " onclick="return false;" title="Auction(s)||Tooltip loading...">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+			window.addEvent('domready', function()
+			{
+				var button = $('button5760402aed5a2');
+				if (button)
+				{
+					var titleFunction = function()
+					{
+						button.removeEvent('mouseenter', titleFunction);
+						Travian.Game.Layout.loadLayoutButtonTitle(button, 'hero', 'auctionWhite');
+					};
+					button.addEvent('mouseenter', titleFunction);
+				}
+			});
+	
+	if($('button5760402aed5a2'))
+	{
+		$('button5760402aed5a2').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"green","onclick":"return false;","loadTitle":true,"boxId":"hero","disabled":false,"speechBubble":"","class":"","id":"button5760402aed5a2","redirectUrl":"hero_auction.php","redirectUrlExternal":""}]);
+		});
+	}
+</script><button type="button" id="button5760402aed697"	class="layoutButton adventureWhite green  " onclick="return false;" title="Adventure(s)||Tooltip loading...">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+			<div class="speechBubbleContainer ">
+	<div class="speechBubbleBackground">
+		<div class="start">
+			<div class="end">
+				<div class="middle"></div>
+			</div>
+		</div>
+	</div>
+	<div class="speechBubbleContent">9</div>
+</div>
+<div class="clear"></div>	</button>
+
+<script type="text/javascript">
+			window.addEvent('domready', function()
+			{
+				var button = $('button5760402aed697');
+				if (button)
+				{
+					var titleFunction = function()
+					{
+						button.removeEvent('mouseenter', titleFunction);
+						Travian.Game.Layout.loadLayoutButtonTitle(button, 'hero', 'adventureWhite');
+					};
+					button.addEvent('mouseenter', titleFunction);
+				}
+			});
+	
+	if($('button5760402aed697'))
+	{
+		$('button5760402aed697').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"green","onclick":"return false;","loadTitle":true,"boxId":"hero","disabled":false,"speechBubble":"9","class":"","id":"button5760402aed697","redirectUrl":"hero_adventure.php","redirectUrlExternal":""}]);
+		});
+	}
+</script>		</div>
+		<div class="innerBox content">
+			<div class="heroStatusMessage" title="Hero is currently in village Buckyx`s village.">
+	<img alt="in home village" src="img/x.gif" class="heroStatus100" />
+	in home village</div>
+
+<div class="progressBars">
+	<div class="heroHealthBarBox alive" title="Health: ‎‭‭100‬%‬‎">
+		<img src="img/x.gif" class="injury" alt="Health" title="Health" />
+		<div class="bar" style="width:100%"> </div>
+	</div>
+
+	<div class="heroXpBarBox" title="Experience: 0">
+		<img src="img/x.gif" class="iExperience" alt="Experience" title="Experience" />
+		<div class="bar" style="width:0%"> </div>
+	</div>
+</div>		</div>
+		<div class="innerBox footer">
+				<button type="button" class="toggle" onclick="" title="Hide information">
+		<div class="button-container addHoverClick"></div>
+	</button>
+
+	<script type="text/javascript">
+		window.addEvent('domready', function()
+		{
+			Travian.Translation.add(
+			{
+				'hero_collapsed': 'Display more information',
+				'hero_expanded': 'Hide information'
+			});
+
+			var box = $('sidebarBoxHero');
+			box.down('button.toggle').addEvent('click', function(e)
+			{
+				Travian.Game.Layout.toggleBox(box, 'travian_toggle', 'hero');
+			});
+		});
+	</script>
+		</div>
+	</div>
+</div>
+<div id="sidebarBoxInfobox" class="sidebarBox   ">
+	<div class="sidebarBoxBaseBox">
+		<div class="baseBox baseBoxTop">
+			<div class="baseBox baseBoxBottom">
+				<div class="baseBox baseBoxCenter"></div>
+			</div>
+		</div>
+	</div>
+	<div class="sidebarBoxInnerBox">
+		<div class="innerBox header ">
+			<div class="boxTitle">Info box</div>
+<span class="messageShortInfo">
+	‎‭‭1‬×‬‎<img class="messages" src="img/x.gif" alt="Total messages: 1" title="Total messages: 1" />
+</span>
+		</div>
+		<div class="innerBox content">
+			<ul>
+		<li id="infoID_8564" class="firstElement">
+		You still have <span  class="timer" counting="down" value="256784">71:19:44</span> hours of beginner's protection left.		</li>
+		</ul>
+
+		</div>
+		<div class="innerBox footer">
+			
+<script type="text/javascript">
+		window.addEvent('domready', function()
+		{
+			Travian.Game.Layout.setInfoboxItemsRead();
+			Travian.Game.Layout.setupInfoboxItemsDeletionWithMessage('Delete this message permanently?','Confirm');
+		});
+</script>		</div>
+	</div>
+</div>						<div class="clear"></div>
+					</div>
+
+					<div id="contentOuterContainer" class="size1">
+													<ul id="stockBar">
+	<li id="stockBarWarehouseWrapper" class="stock" title="Warehouse">
+		<img class="warehouse" src="img/x.gif" alt="Warehouse" />
+		<span class="value" id="stockBarWarehouse">800</span>
+	</li>
+			<li id="stockBarResource1" class="stockBarButton" title="Lumber||Production: 50<br />Click for more information">
+			<div class="begin"></div>
+			<div class="middle">
+				<img class="res r1Big" src="img/x.gif" alt="Lumber"/>
+								<span id="l1" class="value">724</span>
+				<div class="barBox">
+										<div id="lbar1" class="bar" style="width:91%;"></div>
+				</div>
+				<a href="production.php?t=1" title="Lumber||Production: 50<br />Click for more information"><img src="img/x.gif" alt="" /></a>
+			</div>
+			<div class="end"></div>
+		</li>
+			<li id="stockBarResource2" class="stockBarButton" title="Clay||Production: 40<br />Click for more information">
+			<div class="begin"></div>
+			<div class="middle">
+				<img class="res r2Big" src="img/x.gif" alt="Clay"/>
+								<span id="l2" class="value">728</span>
+				<div class="barBox">
+										<div id="lbar2" class="bar" style="width:91%;"></div>
+				</div>
+				<a href="production.php?t=2" title="Clay||Production: 40<br />Click for more information"><img src="img/x.gif" alt="" /></a>
+			</div>
+			<div class="end"></div>
+		</li>
+			<li id="stockBarResource3" class="stockBarButton" title="Iron||Production: 36<br />Click for more information">
+			<div class="begin"></div>
+			<div class="middle">
+				<img class="res r3Big" src="img/x.gif" alt="Iron"/>
+								<span id="l3" class="value">728</span>
+				<div class="barBox">
+										<div id="lbar3" class="bar" style="width:91%;"></div>
+				</div>
+				<a href="production.php?t=3" title="Iron||Production: 36<br />Click for more information"><img src="img/x.gif" alt="" /></a>
+			</div>
+			<div class="end"></div>
+		</li>
+	
+	<li id="stockBarGranaryWrapper" class="stock" title="Granary">
+		<img class="granary" src="img/x.gif" alt="Granary" />
+		<span class="value" id="stockBarGranary">800</span>
+	</li>
+
+	
+	<li id="stockBarResource4" class="stockBarButton">
+		<div class="begin"></div>
+		<div class="middle">
+			<img class="res r4Big" src="img/x.gif" alt="Crop"/>
+						<span id="l4" class="value">763</span>
+			<div class="barBox">
+								<div id="lbar4" class="bar" style="width:95%;"></div>
+			</div>
+			<a href="production.php?t=4" title="Crop||Production minus building upkeep: 47<br />Click for more information"><img src="img/x.gif" alt="" /></a>
+		</div>
+		<div class="end"></div>
+	</li>
+
+		<li id="stockBarFreeCropWrapper" class="stockBarButton r5">
+		<div class="begin"></div>
+		<div class="middle">
+			<img class="res r5Big" src="img/x.gif" alt="Free Crop"/>
+			<span id="stockBarFreeCrop" class="value">17</span>
+			<a href="production.php?t=5" title="Free crop for further buildings.||Crop Balance: ‎&#x202d;&#x202d;41&#x202c;&#x202c;‎<br />Click for more information"><img src="img/x.gif" alt="" /></a>
+		</div>
+		<div class="end"></div>
+	</li>
+	<li class="clear"> </li>
+</ul>
+
+<script type="text/javascript">
+	var resources = new Object();
+
+	resources.production = {
+		"l1": 50,"l2": 40,"l3": 36,"l4": 41,"l5": 17	};
+	resources.storage = {
+		"l1": 724.7917,"l2": 728.4333,"l3": 728.29,"l4": 763.4692	};
+	resources.maxStorage = {
+		"l1": 800,"l2": 800,"l3": 800,"l4": 800	};
+
+	$$('li.stockBarButton').each(function(element)
+	{
+		Travian.addMouseEvents(element, element);
+	});
+
+	var stockBarWarehouse   = $('stockBarWarehouse');
+	var stockBarGranary     = $('stockBarGranary');
+	var stockBarFreeCrop = $('stockBarFreeCrop');
+	var numberFormatter = new Travian.Formatter({forceDecimal:false});
+
+	stockBarWarehouse.set('html', numberFormatter.getFormattedNumber(parseInt(stockBarWarehouse.get('html'))));
+	stockBarGranary.set('html', numberFormatter.getFormattedNumber(parseInt(stockBarGranary.get('html'))));
+	stockBarFreeCrop.set('html', numberFormatter.getFormattedNumber(parseInt(stockBarFreeCrop.get('html'))));
+
+</script>												<div class="contentTitle">
+								<a id="closeContentButton" class="contentTitleButton" href="dorf1.php" title="Close window"> </a>
+<a id="answersButton" class="contentTitleButton" href="http://t4.answers.travian.com.au/index.php?aid=300#go2answer" target="_blank" title="Travian Answers"> </a>						</div>
+						<div class="contentContainer">
+							<div id="content" class="village1">
+								<map name="rx" id="rx">
+<area href="build.php?id=1" coords="190,88,28" shape="circle" title="Woodcutter <span class="level">Level 1</span>||Cost for upgrading building to level 2:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />65
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />165
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />85
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />100
+				</span> <div class="clear"></div>" alt="Woodcutter Level 1"/><area href="build.php?id=2" coords="280,89,28" shape="circle" title="Cropland <span class="level">Level 2</span>||Cost for upgrading building to level 3:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />195
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />250
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />195
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />55
+				</span> <div class="clear"></div>" alt="Cropland Level 2"/><area href="build.php?id=3" coords="348,101,28" shape="circle" title="Woodcutter <span class="level">Level 2</span>||Cost for upgrading building to level 3:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />110
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />280
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />140
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />165
+				</span> <div class="clear"></div>" alt="Woodcutter Level 2"/><area href="build.php?id=4" coords="132,127,28" shape="circle" title="Iron Mine <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />100
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />80
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />30
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />60
+				</span> <div class="clear"></div>" alt="Iron Mine Level 0"/><area href="build.php?id=5" coords="245,140,28" shape="circle" title="Clay Pit <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />80
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />40
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />80
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />50
+				</span> <div class="clear"></div>" alt="Clay Pit Level 0"/><area href="build.php?id=6" coords="302,147,28" shape="circle" title="Clay Pit <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />80
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />40
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />80
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />50
+				</span> <div class="clear"></div>" alt="Clay Pit Level 0"/><area href="build.php?id=7" coords="387,145,28" shape="circle" title="Iron Mine <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />100
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />80
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />30
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />60
+				</span> <div class="clear"></div>" alt="Iron Mine Level 0"/><area href="build.php?id=8" coords="72,178,28" shape="circle" title="Cropland <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />70
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />90
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />70
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />20
+				</span> <div class="clear"></div>" alt="Cropland Level 0"/><area href="build.php?id=9" coords="153,179,28" shape="circle" title="Cropland <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />70
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />90
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />70
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />20
+				</span> <div class="clear"></div>" alt="Cropland Level 0"/><area href="build.php?id=10" coords="343,179,28" shape="circle" title="Iron Mine <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />100
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />80
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />30
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />60
+				</span> <div class="clear"></div>" alt="Iron Mine Level 0"/><area href="build.php?id=11" coords="430,179,28" shape="circle" title="Iron Mine <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />100
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />80
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />30
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />60
+				</span> <div class="clear"></div>" alt="Iron Mine Level 0"/><area href="build.php?id=12" coords="80,239,28" shape="circle" title="Cropland <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />70
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />90
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />70
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />20
+				</span> <div class="clear"></div>" alt="Cropland Level 0"/><area href="build.php?id=13" coords="153,229,28" shape="circle" title="Cropland <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />70
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />90
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />70
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />20
+				</span> <div class="clear"></div>" alt="Cropland Level 0"/><area href="build.php?id=14" coords="289,265,28" shape="circle" title="Woodcutter <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />40
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />100
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />50
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />60
+				</span> <div class="clear"></div>" alt="Woodcutter Level 0"/><area href="build.php?id=15" coords="411,234,28" shape="circle" title="Cropland <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />70
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />90
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />70
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />20
+				</span> <div class="clear"></div>" alt="Cropland Level 0"/><area href="build.php?id=16" coords="184,319,28" shape="circle" title="Clay Pit <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />80
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />40
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />80
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />50
+				</span> <div class="clear"></div>" alt="Clay Pit Level 0"/><area href="build.php?id=17" coords="275,324,28" shape="circle" title="Woodcutter <span class="level">Level 0</span>||Cost for upgrading building to level 1:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />40
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />100
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />50
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />60
+				</span> <div class="clear"></div>" alt="Woodcutter Level 0"/><area href="build.php?id=18" coords="365,301,28" shape="circle" title="Clay Pit <span class="level">Level 1</span>||Cost for upgrading building to level 2:<br />
+					<div class="showCosts">
+				<span class="resources r1">
+				<img class="r1" src="img/x.gif" />135
+				</span> 
+				<span class="resources r2">
+				<img class="r2" src="img/x.gif" />65
+				</span> 
+				<span class="resources r3">
+				<img class="r3" src="img/x.gif" />135
+				</span> 
+				<span class="resources r4">
+				<img class="r4" src="img/x.gif" />85
+				</span> <div class="clear"></div>" alt="Clay Pit Level 1"/>	<area href="dorf2.php" coords="250,191,32" shape="circle" title="Buildings" alt="" />
+</map>
+
+<div id="village_map" class="f3">
+	
+                    <div class="level colorLayer good gid1 level1" style="left: 179px; top:78px;">
+                        <div class="labelLayer">1</div>
+                    </div>
+                
+                    <div class="level colorLayer good gid4 level2" style="left: 269px; top:79px;">
+                        <div class="labelLayer">2</div>
+                    </div>
+                
+                    <div class="level colorLayer good gid1 level2" style="left: 337px; top:91px;">
+                        <div class="labelLayer">2</div>
+                    </div>
+                
+                    <div class="level colorLayer good gid3 level0" style="left: 121px; top:117px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid2 level0" style="left: 234px; top:130px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid2 level0" style="left: 291px; top:137px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid3 level0" style="left: 376px; top:135px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid4 level0" style="left: 61px; top:168px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid4 level0" style="left: 142px; top:169px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid3 level0" style="left: 332px; top:169px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid3 level0" style="left: 419px; top:169px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid4 level0" style="left: 69px; top:229px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid4 level0" style="left: 142px; top:219px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid1 level0" style="left: 278px; top:255px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid4 level0" style="left: 400px; top:224px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid2 level0" style="left: 173px; top:309px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid1 level0" style="left: 264px; top:314px;">
+                        <div class="labelLayer"></div>
+                    </div>
+                
+                    <div class="level colorLayer good gid2 level1" style="left: 354px; top:291px;">
+                        <div class="labelLayer">1</div>
+                    </div>
+                	<img src="img/x.gif" class="villageCenter" alt="" />
+	<img id="resfeld" usemap="#rx" src="img/x.gif" alt="" />
+</div>
+
+
+<div id="map_details">
+	<div class="movements">
+	</div>
+<div class="boxes villageList production">
+	<div class="boxes-tl"></div>
+	<div class="boxes-tr"></div>
+	<div class="boxes-tc"></div>
+	<div class="boxes-ml"></div>
+	<div class="boxes-mr"></div>
+	<div class="boxes-mc"></div>
+	<div class="boxes-bl"></div>
+	<div class="boxes-br"></div>
+	<div class="boxes-bc"></div>
+	<div class="boxes-contents cf"><table id="production" cellpadding="1" cellspacing="1">
+	<thead>
+		<tr>
+			<th colspan="4">
+				Production per hour:			</th>
+		</tr>
+	</thead>
+	<tbody>
+				<tr>
+			<td class="ico">
+				<div>
+					<img class="r1Big" src="img/x.gif" alt="Lumber" title="Lumber" />
+									</div>
+			</td>
+			<td class="res">
+				Lumber:
+			</td>
+			<td class="num">
+                				‎‭‭50‬‬‎			</td>
+		</tr>
+				<tr>
+			<td class="ico">
+				<div>
+					<img class="r2Big" src="img/x.gif" alt="Clay" title="Clay" />
+									</div>
+			</td>
+			<td class="res">
+				Clay:
+			</td>
+			<td class="num">
+                				‎‭‭40‬‬‎			</td>
+		</tr>
+				<tr>
+			<td class="ico">
+				<div>
+					<img class="r3Big" src="img/x.gif" alt="Iron" title="Iron" />
+									</div>
+			</td>
+			<td class="res">
+				Iron:
+			</td>
+			<td class="num">
+                				‎‭‭36‬‬‎			</td>
+		</tr>
+				<tr>
+			<td class="ico">
+				<div>
+					<img class="r4Big" src="img/x.gif" alt="Crop" title="Crop" />
+									</div>
+			</td>
+			<td class="res">
+				Crop:
+			</td>
+			<td class="num">
+                				‎‭‭41‬‬‎			</td>
+		</tr>
+			</tbody>
+</table>
+<div>
+	<button  type="button" value="‎‭+‭25‬%‬‎" id="button5760402aeb039" class="gold productionBoostButton" title="More information about the production bonus.">
+	<div class="button-container addHoverClick">
+		<div class="button-background">
+			<div class="buttonStart">
+				<div class="buttonEnd">
+					<div class="buttonMiddle"></div>
+				</div>
+			</div>
+		</div>
+		<div class="button-content">‎‭+‭25‬%‬‎</div>
+	</div>
+</button>
+<script type="text/javascript" id="button5760402aeb039_script">
+	window.addEvent('domready', function()
+	{
+	if($('button5760402aeb039'))
+	{
+		$('button5760402aeb039').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"button","value":"\u200e\u0026#x202d;\u0026#43;\u0026#x202d;25\u0026#x202c;\u0026#37;\u0026#x202c;\u200e","name":"","id":"button5760402aeb039","class":"gold productionBoostButton","title":"More information about the production bonus.","confirm":"","onclick":"","productionBoostDialog":{"infoIcon":"http:\/\/t4.answers.travian.com.au\/index.php?aid=Travian Answers#go2answer"}}]);
+		});
+	}
+	});
+</script>
+</div>
+	</div>
+</div>
+<div class="boxes villageList units">
+	<div class="boxes-tl"></div>
+	<div class="boxes-tr"></div>
+	<div class="boxes-tc"></div>
+	<div class="boxes-ml"></div>
+	<div class="boxes-mr"></div>
+	<div class="boxes-mc"></div>
+	<div class="boxes-bl"></div>
+	<div class="boxes-br"></div>
+	<div class="boxes-bc"></div>
+	<div class="boxes-contents cf"><table id="troops" cellpadding="1" cellspacing="1">
+<thead><tr>
+	<th colspan="3">Troops:</th>
+</tr></thead><tbody>
+				<tr>
+				<td class="ico"><a href="build.php?gid=16#td"><img class="unit uhero" src="img/x.gif" alt="Hero" title="Hero" /></a></td>
+				<td class="num">1</td>
+				<td class="un">Hero</td>
+			</tr>
+		</tbody></table>
+	</div>
+</div>	<div class="clear"></div>
+</div>
+<div class="clear"></div>
+								<div class="clear"></div>
+							</div>
+							<div class="clear"> </div>
+						</div>
+						<div class="contentFooter"></div>
+					</div>
+
+					<div id="sidebarAfterContent" class="sidebar afterContent ">
+						
+<div id="sidebarBoxActiveVillage" class="sidebarBox   ">
+	<div class="sidebarBoxBaseBox">
+		<div class="baseBox baseBoxTop">
+			<div class="baseBox baseBoxBottom">
+				<div class="baseBox baseBoxCenter"></div>
+			</div>
+		</div>
+	</div>
+	<div class="sidebarBoxInnerBox">
+		<div class="innerBox header ">
+			<button type="button" id="button5760402af0190"	class="layoutButton workshopBlack gold disabled " onclick="return false;" title="Direct links||For this feature you need Travian Plus activated.<br /><span class="warning">There is no workshop in this village.</span>">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+	
+	if($('button5760402af0190'))
+	{
+		$('button5760402af0190').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"gold","onclick":"return false;","loadTitle":false,"boxId":"activeVillage","disabled":true,"speechBubble":"","class":"","id":"button5760402af0190","redirectUrl":"","redirectUrlExternal":"","plusDialog":{"featureKey":"directLinks","infoIcon":"http:\/\/t4.answers.travian.com.au\/index.php?aid=Travian Answers#go2answer"}}]);
+		});
+	}
+</script><button type="button" id="button5760402af028f"	class="layoutButton stableBlack gold disabled " onclick="return false;" title="Direct links||For this feature you need Travian Plus activated.<br /><span class="warning">There is no stable in this village.</span>">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+	
+	if($('button5760402af028f'))
+	{
+		$('button5760402af028f').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"gold","onclick":"return false;","loadTitle":false,"boxId":"activeVillage","disabled":true,"speechBubble":"","class":"","id":"button5760402af028f","redirectUrl":"","redirectUrlExternal":"","plusDialog":{"featureKey":"directLinks","infoIcon":"http:\/\/t4.answers.travian.com.au\/index.php?aid=Travian Answers#go2answer"}}]);
+		});
+	}
+</script><button type="button" id="button5760402af0383"	class="layoutButton barracksBlack gold disabled " onclick="return false;" title="Direct links||For this feature you need Travian Plus activated.<br /><span class="warning">There is no barracks in this village.</span>">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+	
+	if($('button5760402af0383'))
+	{
+		$('button5760402af0383').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"gold","onclick":"return false;","loadTitle":false,"boxId":"activeVillage","disabled":true,"speechBubble":"","class":"","id":"button5760402af0383","redirectUrl":"","redirectUrlExternal":"","plusDialog":{"featureKey":"directLinks","infoIcon":"http:\/\/t4.answers.travian.com.au\/index.php?aid=Travian Answers#go2answer"}}]);
+		});
+	}
+</script><button type="button" id="button5760402af0462"	class="layoutButton marketBlack gold disabled " onclick="return false;" title="Direct links||For this feature you need Travian Plus activated.<br /><span class="warning">There is no marketplace in this village.</span>">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+	
+	if($('button5760402af0462'))
+	{
+		$('button5760402af0462').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"gold","onclick":"return false;","loadTitle":false,"boxId":"activeVillage","disabled":true,"speechBubble":"","class":"","id":"button5760402af0462","redirectUrl":"","redirectUrlExternal":"","plusDialog":{"featureKey":"directLinks","infoIcon":"http:\/\/t4.answers.travian.com.au\/index.php?aid=Travian Answers#go2answer"}}]);
+		});
+	}
+</script>
+<div class="clear"></div>
+<div id="villageNameField" class="boxTitle">Buckyx`s village</div>
+		</div>
+		<div class="innerBox content">
+			<div class="loyalty medium">
+	Loyalty: <span>‎‭‭100‬%‬‎</span>
+</div>		</div>
+		<div class="innerBox footer">
+			    <button type="button" id="button5760402af06bf"	class="layoutButton editWhite green  " onclick="return false;" title="Edit village name.">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+	
+	if($('button5760402af06bf'))
+	{
+		$('button5760402af06bf').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"green","onclick":"return false;","loadTitle":false,"boxId":"","disabled":false,"speechBubble":"","class":"","id":"button5760402af06bf","redirectUrl":"","redirectUrlExternal":"","title":"Double click to change name of the village.","villageDialog":{"title":"Change village name.","description":"New village name:","saveText":"Save","villageId":"2078"}}]);
+		});
+	}
+</script>		</div>
+	</div>
+</div>
+<div id="sidebarBoxVillagelist" class="sidebarBox toggleable collapsed ">
+	<div class="sidebarBoxBaseBox">
+		<div class="baseBox baseBoxTop">
+			<div class="baseBox baseBoxBottom">
+				<div class="baseBox baseBoxCenter"></div>
+			</div>
+		</div>
+	</div>
+	<div class="sidebarBoxInnerBox">
+		<div class="innerBox header ">
+			<button type="button" id="button5760402af0b54"	class="layoutButton toggleCoordsWhite green  toggle" onclick="return false;" title="Show coordinates">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+	
+	if($('button5760402af0b54'))
+	{
+		$('button5760402af0b54').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"green","onclick":"return false;","loadTitle":false,"boxId":"","disabled":false,"speechBubble":"","class":"toggle","id":"button5760402af0b54","redirectUrl":"","redirectUrlExternal":""}]);
+		});
+	}
+</script><button type="button" id="button5760402af0c1f"	class="layoutButton overviewWhite green  " onclick="return false;" title="Village statistics">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+	
+	if($('button5760402af0c1f'))
+	{
+		$('button5760402af0c1f').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"green","onclick":"return false;","loadTitle":false,"boxId":"","disabled":false,"speechBubble":"","class":"","id":"button5760402af0c1f","redirectUrl":"dorf3.php","redirectUrlExternal":""}]);
+		});
+	}
+</script>
+<div class="clear"></div>
+
+
+<div class="expansionSlotInfo" title="Villages: ‎‭‭‭1‬‬/‭‭1‬‬‬‎</br>Culture points generated to take control of another village: 514 / 2000">
+	<div class="boxTitleAdditional">‎‭‭‭1‬‬/‭‭1‬‬‬‎</div>
+	<div class="boxTitle">Villages</div>
+	<div class="villageListBarBox">
+		<div class="bar" style="width:25.7%"> </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	window.addEvent('domready', function()
+	{
+				Travian.Translation.add(
+		{
+			'villagelist_collapsed': 'Show coordinates',
+			'villagelist_expanded': 'Hide coordinates'
+		});
+
+		var box = $('sidebarBoxVillagelist');
+		box.down('button.toggle').addEvent('click', function(e)
+		{
+			Travian.Game.Layout.toggleBox(box, 'travian_toggle', 'villagelist');
+		});
+	});
+	</script>		</div>
+		<div class="innerBox content">
+				<ul>
+					<li class=" active" title="Buckyx`s village ‎&#x202d;<span class="coordinates coordinatesWrapper"><span class="coordinateX">(&#x202d;&#x202d;8&#x202c;&#x202c;</span><span class="coordinatePipe">|</span><span class="coordinateY">&#x202d;&#x202d;46&#x202c;&#x202c;)</span></span>&#x202c;‎">
+								<a  href="?newdid=2078&" accesskey="b" class="active">
+					<img src="img/x.gif" alt="" />
+					<div class="name">Buckyx`s village</div>
+					‎‭<span class="coordinates coordinatesWrapper coordinatesAligned coordinatesLTR"><span class="coordinateX">(‭‭8‬‬</span><span class="coordinatePipe">|</span><span class="coordinateY">‭‭46‬‬)</span></span>‬‎				</a>
+			</li>
+			</ul>
+		</div>
+		<div class="innerBox footer">
+					</div>
+	</div>
+</div>
+<div id="sidebarBoxQuestmaster" class="sidebarBox   ">
+	<div class="sidebarBoxBaseBox">
+		<div class="baseBox baseBoxTop">
+			<div class="baseBox baseBoxBottom">
+				<div class="baseBox baseBoxCenter"></div>
+			</div>
+		</div>
+	</div>
+	<div class="sidebarBoxInnerBox">
+		<div class="innerBox header ">
+			<button id="questmasterButton" title="Display task list" class="forceDisplayElement vid_3" type="button">
+	<img class="border" alt="" src="img/x.gif" />
+	<img class="animation" alt="" src="img/x.gif" />
+	<img class="mentor" alt="" src="img/x.gif" />
+
+	</button>
+
+<button type="button" id="button5760402af13c3"	class="layoutButton bulbWhite green  " onclick="return false;" title="Display interface help">
+	<div class="button-container addHoverClick">
+		<img src="img/x.gif" alt="" />
+	</div>
+	</button>
+
+<script type="text/javascript">
+	
+	if($('button5760402af13c3'))
+	{
+		$('button5760402af13c3').addEvent('click', function ()
+		{
+			window.fireEvent('buttonClicked', [this, {"type":"green","onclick":"return false;","loadTitle":false,"boxId":"","disabled":false,"speechBubble":"","class":"","id":"button5760402af13c3","redirectUrl":"","redirectUrlExternal":"","overlay":[]}]);
+		});
+	}
+</script><div class="clear"></div>
+<div class="boxTitle">Hero production</div>
+
+<script type="text/javascript">
+window.addEvent('domready', function()
+{
+	Travian.Game.Quest.setOptions(
+	{
+		isTutorial : true	});
+
+	// Dialog an den Questmaster binden
+	$('questmasterButton').addEvent('click', function()
+	{
+		Travian.Game.Quest.mentorClick('Tutorial_06');
+	});
+});
+</script>
+<div>
+	<script type="text/javascript">
+	
+						var wrongResources = [
+							".hero_inventory #setResource .resource.r0",
+							".hero_inventory #setResource .resource.r1",
+							".hero_inventory #setResource .resource.r3",
+							".hero_inventory #setResource .resource.r4"
+						];
+						
+						wrongResources.each(function(res) {
+							$$(res).addEvent('click', function()
+							{
+								$$('.hero_inventory #saveHeroAttributes').removeClass('clayClicked');
+								Travian.Game.Quest.createHighlights();
+							});
+						});
+						
+						$$('.hero_inventory #setResource .resource.r2').addEvent('click', function()
+						{
+								$$('.hero_inventory #saveHeroAttributes').addClass('clayClicked');
+								Travian.Game.Quest.createHighlights();
+						});
+
+						$$('.hero_inventory .openCloseSwitchBar').addEvent('click', function()
+						{
+								Travian.Game.Quest.createHighlights();
+						});
+
+						$$('.questInformation .iconButton.small.cancel').addEvent('click', function()
+						{
+							setTimeout(function() {
+								Travian.Game.Quest.createHighlights();
+							}, 500);
+						});
+					</script></div>		</div>
+		<div class="innerBox content">
+			<ul id="mentorTaskList">
+	
+	
+	
+								<li>
+				<a href="#" class="tutorial" onclick="$('questmasterButton').click(); return false;">
+											<img src="img/x.gif" class="finished">
+										Hero image				</a>
+			</li>
+								<li>
+				<a href="#" class="tutorial" onclick="$('questmasterButton').click(); return false;">
+										Hero production				</a>
+			</li>
+							<script type="text/javascript">
+		Travian.Translation.add('answers.tutorial_06_title', "Travian Answers");
+	</script>
+
+</ul>
+
+<script type="text/javascript">
+	window.addEvent('domready', function()
+	{
+		Travian.Game.Quest.setOptions(
+		{
+			tipsTurnoffAjaxTrigger: false,
+			tutorialData: {"id":"Tutorial_06","name":"questV2.tutorial_06_name","category":"tutorial","stepType":"task","currentStep":1,"stepCount":3,"steps":[{"stepId":0,"type":"task","stepDescription":"questV2.tutorial_06_step_01_layoutdescription"},{"stepId":1,"type":"task","stepDescription":"questV2.tutorial_06_step_02_layoutdescription"},{"stepId":2,"type":"reward"}],"answersLink":"http:\/\/t4.answers.travian.com.au\/index.php?aid=337#go2answer"},
+			highlightSelectors: [{"selector":".hero_inventory .openCloseSwitchBar .openedClosedSwitch.switchClosed","renderer":"rectangle"},{"selector":".hero_inventory #saveHeroAttributes.clayClicked","renderer":"rectangle"},{"selector":".hero_inventory #setResource .resource.r2","renderer":"rectangle"},{"selector":"#heroImageButton","renderer":"image"}]		});
+
+        Travian.Game.Quest.addListData(
+            []        );
+
+		Travian.Game.Quest.bindListDelegation();
+		Travian.Game.Quest.createHighlights();
+		Travian.Game.Quest.initializeQuests();
+	});
+</script>
+		</div>
+		<div class="innerBox footer">
+					</div>
+	</div>
+</div>						<div class="clear"></div>
+					</div>
+
+					<div class="clear"></div>
+				</div>
+
+				<div id="footer" class="size1">
+					<div id="pageLinks">
+						<a href="http://www.travian.com.au/" target="_blank">Homepage</a>
+						<a href="http://forum.travian.com.au" target="_blank">Forum</a>
+						<a href="http://www.travian.com.au/links.php" target="_blank">Links</a>
+						<a href="http://t4.answers.travian.com.au/" target="_blank">FAQ - Answers</a>
+						<a href="http://www.travian.com.au/spielregeln.php" target="_blank">Game rules</a>
+						<a href="http://www.travian.com.au/agb.php" target="_blank">Terms</a>
+						<a href="http://www.travian.com.au/impressum.php" target="_blank">Imprint</a>
+						<div class="clear"></div>
+											</div>
+					<p class="copyright">© 2004 - 2016 Travian Games GmbH</p>
+				</div>
+
+									<div id="servertime" class="stime">
+	Server time: 
+	<span  class="timer" counting="up" value="1465925674">03:34:34</span></div>							</div>
+
+			
+			<div id="ce"></div>
+
+			
+					</div>
+		<script type="text/javascript">
+			var T4_feature_flags = {"aeu":false,"vacationMode":true,"territory":false};
+		</script>
+
+		
+		
+			</body>
+</html>

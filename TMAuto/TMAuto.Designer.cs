@@ -45,11 +45,25 @@
             this.tabPageTroops = new System.Windows.Forms.TabPage();
             this.tabPageFarms = new System.Windows.Forms.TabPage();
             this.tabPageHero = new System.Windows.Forms.TabPage();
+            this.numericUpDownHard = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownNormal = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBoxAdventureMode = new System.Windows.Forms.GroupBox();
+            this.rdBtnClosest = new System.Windows.Forms.RadioButton();
+            this.rdBtnRandom = new System.Windows.Forms.RadioButton();
+            this.rdBtnFurthest = new System.Windows.Forms.RadioButton();
+            this.chkBoxDoAdventures = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.tabPageLog = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tbCtrlMain.SuspendLayout();
             this.tabPageAccount.SuspendLayout();
             this.tagPageBuildings.SuspendLayout();
+            this.tabPageHero.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHard)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormal)).BeginInit();
+            this.groupBoxAdventureMode.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -154,7 +168,7 @@
             this.tabPageAccount.Controls.Add(this.txtBoxPassword);
             this.tabPageAccount.Location = new System.Drawing.Point(4, 25);
             this.tabPageAccount.Name = "tabPageAccount";
-            this.tabPageAccount.Size = new System.Drawing.Size(988, 345);
+            this.tabPageAccount.Size = new System.Drawing.Size(988, 343);
             this.tabPageAccount.TabIndex = 2;
             this.tabPageAccount.Text = "Account";
             this.tabPageAccount.UseVisualStyleBackColor = true;
@@ -217,12 +231,137 @@
             // 
             // tabPageHero
             // 
+            this.tabPageHero.Controls.Add(this.numericUpDownHard);
+            this.tabPageHero.Controls.Add(this.numericUpDownNormal);
+            this.tabPageHero.Controls.Add(this.label6);
+            this.tabPageHero.Controls.Add(this.groupBoxAdventureMode);
+            this.tabPageHero.Controls.Add(this.chkBoxDoAdventures);
+            this.tabPageHero.Controls.Add(this.label5);
+            this.tabPageHero.Controls.Add(this.label3);
             this.tabPageHero.Location = new System.Drawing.Point(4, 25);
             this.tabPageHero.Name = "tabPageHero";
             this.tabPageHero.Size = new System.Drawing.Size(988, 343);
             this.tabPageHero.TabIndex = 5;
             this.tabPageHero.Text = "Hero";
             this.tabPageHero.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDownHard
+            // 
+            this.numericUpDownHard.Location = new System.Drawing.Point(179, 78);
+            this.numericUpDownHard.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownHard.Name = "numericUpDownHard";
+            this.numericUpDownHard.Size = new System.Drawing.Size(49, 22);
+            this.numericUpDownHard.TabIndex = 9;
+            this.numericUpDownHard.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDownHard.ValueChanged += new System.EventHandler(this.numericUpDownHard_ValueChanged);
+            // 
+            // numericUpDownNormal
+            // 
+            this.numericUpDownNormal.Location = new System.Drawing.Point(179, 50);
+            this.numericUpDownNormal.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownNormal.Name = "numericUpDownNormal";
+            this.numericUpDownNormal.Size = new System.Drawing.Size(49, 22);
+            this.numericUpDownNormal.TabIndex = 8;
+            this.numericUpDownNormal.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numericUpDownNormal.ValueChanged += new System.EventHandler(this.numericUpDownNormal_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(25, 83);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(118, 17);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Hard adventures:";
+            // 
+            // groupBoxAdventureMode
+            // 
+            this.groupBoxAdventureMode.Controls.Add(this.rdBtnClosest);
+            this.groupBoxAdventureMode.Controls.Add(this.rdBtnRandom);
+            this.groupBoxAdventureMode.Controls.Add(this.rdBtnFurthest);
+            this.groupBoxAdventureMode.Location = new System.Drawing.Point(28, 177);
+            this.groupBoxAdventureMode.Name = "groupBoxAdventureMode";
+            this.groupBoxAdventureMode.Size = new System.Drawing.Size(200, 108);
+            this.groupBoxAdventureMode.TabIndex = 6;
+            this.groupBoxAdventureMode.TabStop = false;
+            this.groupBoxAdventureMode.Text = "Adventure mode";
+            // 
+            // rdBtnClosest
+            // 
+            this.rdBtnClosest.AutoSize = true;
+            this.rdBtnClosest.Checked = true;
+            this.rdBtnClosest.Location = new System.Drawing.Point(46, 21);
+            this.rdBtnClosest.Name = "rdBtnClosest";
+            this.rdBtnClosest.Size = new System.Drawing.Size(75, 21);
+            this.rdBtnClosest.TabIndex = 2;
+            this.rdBtnClosest.TabStop = true;
+            this.rdBtnClosest.Text = "Closest";
+            this.rdBtnClosest.UseVisualStyleBackColor = true;
+            // 
+            // rdBtnRandom
+            // 
+            this.rdBtnRandom.AutoSize = true;
+            this.rdBtnRandom.Location = new System.Drawing.Point(46, 75);
+            this.rdBtnRandom.Name = "rdBtnRandom";
+            this.rdBtnRandom.Size = new System.Drawing.Size(82, 21);
+            this.rdBtnRandom.TabIndex = 5;
+            this.rdBtnRandom.Text = "Random";
+            this.rdBtnRandom.UseVisualStyleBackColor = true;
+            // 
+            // rdBtnFurthest
+            // 
+            this.rdBtnFurthest.AutoSize = true;
+            this.rdBtnFurthest.Location = new System.Drawing.Point(46, 48);
+            this.rdBtnFurthest.Name = "rdBtnFurthest";
+            this.rdBtnFurthest.Size = new System.Drawing.Size(81, 21);
+            this.rdBtnFurthest.TabIndex = 4;
+            this.rdBtnFurthest.Text = "Furthest";
+            this.rdBtnFurthest.UseVisualStyleBackColor = true;
+            // 
+            // chkBoxDoAdventures
+            // 
+            this.chkBoxDoAdventures.AutoSize = true;
+            this.chkBoxDoAdventures.Location = new System.Drawing.Point(74, 150);
+            this.chkBoxDoAdventures.Name = "chkBoxDoAdventures";
+            this.chkBoxDoAdventures.Size = new System.Drawing.Size(123, 21);
+            this.chkBoxDoAdventures.TabIndex = 3;
+            this.chkBoxDoAdventures.Text = "Do adventures";
+            this.chkBoxDoAdventures.UseVisualStyleBackColor = true;
+            this.chkBoxDoAdventures.CheckedChanged += new System.EventHandler(this.chkBoxDoAdventures_CheckedChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(25, 55);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(132, 17);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Normal adventures:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(71, 27);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(102, 17);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Health settings";
             // 
             // tabPageLog
             // 
@@ -262,6 +401,12 @@
             this.tabPageAccount.ResumeLayout(false);
             this.tabPageAccount.PerformLayout();
             this.tagPageBuildings.ResumeLayout(false);
+            this.tabPageHero.ResumeLayout(false);
+            this.tabPageHero.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHard)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormal)).EndInit();
+            this.groupBoxAdventureMode.ResumeLayout(false);
+            this.groupBoxAdventureMode.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -288,6 +433,16 @@
         private System.Windows.Forms.TabPage tabPageLog;
         private System.Windows.Forms.TextBox txtBoxServer;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton rdBtnRandom;
+        private System.Windows.Forms.RadioButton rdBtnFurthest;
+        private System.Windows.Forms.CheckBox chkBoxDoAdventures;
+        private System.Windows.Forms.RadioButton rdBtnClosest;
+        private System.Windows.Forms.GroupBox groupBoxAdventureMode;
+        private System.Windows.Forms.NumericUpDown numericUpDownHard;
+        private System.Windows.Forms.NumericUpDown numericUpDownNormal;
+        private System.Windows.Forms.Label label6;
     }
 }
 

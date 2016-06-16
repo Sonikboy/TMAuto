@@ -8,32 +8,36 @@ namespace TWAuto
 {
     class PriorityQueue
     {
-        private SortedList<int, int> list = new SortedList<int, int>(new PriorityComparer());
-        public void Enqueue(int id, int priority)
+        public BuildingQueueList List = new BuildingQueueList();
+        public void Enqueue(int priority, QueuedBuilding building)
         {
-            list.Add(priority, id);
+            List.Add(priority, building);
         }
-
-        public object Peek()
-        {
-            var first = list.First();
-
-            return new { Id = first.Value, Priority = first.Key };
+       
+        public QueuedBuilding Peek() {
+            return List.First();
         }
 
 		public void Dequeue()
         {
-            list.RemoveAt(0);
+            RemoveAt(0);
         }
 
 		public bool Empty()
         {
-            return list.Count == 0;
+            return List.Count == 0;
         }
 
         public int GetOffset(int id)
         {
-            return list.Count(i => i.Value == id);
+            return List.Count(i => i.Value.Id == id);
+        }
+
+        public void RemoveAt(int index)
+        {
+            Action remove = () => List.RemoveAt(index);
+
+            BuildingManager.RemoveAction(remove);
         }
     }
 }

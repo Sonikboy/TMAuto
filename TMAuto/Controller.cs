@@ -94,11 +94,15 @@ namespace TWAuto
             }
         }
 
-        public void AddBuildingToQueue(Village village, int buildingId)
+        public void AddBuildingToQueue(Village village, int buildingId, int priority = 0)
         {
-            buildingManager.AddBuilding(village, buildingId);
+            buildingManager.AddBuilding(village, buildingId, priority);
         }
 
+        public void RemoveBuildingFromQueue(Village village, int index)
+        {
+            buildingManager.RemoveBuilding(village, index);
+        }
         private void log(string message)
         {
             LogManager.log(message);

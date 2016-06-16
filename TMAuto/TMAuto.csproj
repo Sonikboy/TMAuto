@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Army.cs" />
+    <Compile Include="BuildingQueueList.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="BuildingManager.cs" />
     <Compile Include="Buildings.cs" />
@@ -92,6 +93,7 @@
     </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="PriorityComparer.cs" />
+    <Compile Include="QueuedBuilding.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TMAuto.cs">

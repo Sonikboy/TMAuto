@@ -38,12 +38,21 @@ namespace TWAuto
                 hero.Health = int.Parse(health);
                 hero.InVillage = int.Parse(node.SelectSingleNode("//img[contains(@class,'heroStatus')]").Attributes["class"].Value.Substring(10)) == 100;
 
-                //if hero should do adventures
-                if (hero.AdventureMode != Mode.NONE && hero.InVillage)
+                //if hero should do adventures and has health
+                if (hero.AdventureMode != Mode.NONE && hero.InVillage && hero.CanNormal)
                 {
                     LogManager.log("checking hero adventures");
                     //choosing adventure
-                    var adventureNodes = node.SelectNodes("//tr[@id]");
+                    //if cant hard mode
+                    HtmlAgilityPack.HtmlNodeCollection adventureNodes;
+                    if (!hero.CanHard)
+                    {
+                        adventureNodes = node.SelectNodes("//tr[@id and .//img[not(@class='adventureDifficulty0')]]");    
+                    } else
+                    {
+                        adventureNodes = node.SelectNodes("//tr[@id]");
+                    }
+
                     int count = adventureNodes.Count;
 
                     if (count > 0)
@@ -66,7 +75,7 @@ namespace TWAuto
 
                                 break;
                             default: //CLOSEST
-                                newCount = -1;
+                                newCount = 0;
 
                                 adventureIndex = r.GetDoc().DocumentNode.SelectNodes("//td[contains(@id,'walktime')]")
                                 .Select(n => { return new { Time = n.InnerText.Trim(), Index = newCount++ }; })
@@ -76,7 +85,7 @@ namespace TWAuto
 
                                 break;
                         }
-
+                        
                         task.addOperation((rr) =>
                         {
                             var sendNode = rr.GetDoc().DocumentNode.SelectSingleNode("//form[@class='adventureSendButton']").NextSibling.NextSibling;
@@ -92,7 +101,7 @@ namespace TWAuto
 
                             Task.sendPost("start_adventure.php", content);
                         });
-
+                        
                         string url = adventureNodes[adventureIndex].SelectSingleNode("td[@id]/a").Attributes["href"].Value;
                         LogManager.log("Sending hero to adventure");
                         Task.sendGet(url);

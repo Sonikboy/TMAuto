@@ -19,6 +19,8 @@ namespace TWAuto
         public event BuildingTimerHandler BuildingTimerElapsed;
         public delegate void CreateTabVillagesPanelHandler(List<Village> villages);
         public static event CreateTabVillagesPanelHandler TabVillagesPanelCreated;
+        public delegate void RemoveBuildingQueueHandler(Action action);
+        public static event RemoveBuildingQueueHandler BuildingQueueRemoved;
 
         public BuildingManager(Action processResult)
         {
@@ -32,17 +34,25 @@ namespace TWAuto
         {
             timer.Start();
         }
-        public void AddBuilding(Village village, int id, int priority = 0) 
+        public void AddBuilding(Village village, int id, int priority = 0)
+        {
+            PriorityQueue queue = village.BuildingQueue;
+            
+            var b = new QueuedBuilding() { Name = Buildings.GetName(village.Buildings[id].Type), Id = id };
+            queue.Enqueue(priority, b);
+            b.Level = village.Buildings[id].Level + GetOffset(village, id);
+    }
+
+        public void RemoveBuilding(Village village, int index)
         {
             PriorityQueue queue = village.BuildingQueue;
 
-            queue.Enqueue(id, priority);
+            queue.RemoveAt(index);
         }
-
         public int GetOffset(Village village, int id)
         {
             PriorityQueue queue = village.BuildingQueue;
-
+            
             return queue.GetOffset(id);
         }
 
@@ -55,9 +65,9 @@ namespace TWAuto
                 return null;
             }
 
-            dynamic b = queue.Peek();
+            QueuedBuilding b = queue.Peek();
             Building building = village.Buildings[b.Id];
-            Task task = new Task() { Name = "Build " + building.Name + (building.Level + 1) };
+            Task task = new Task() { Name = "Build " + building.Name};
             Settings settins = Settings.Instance;
 
             task.addOperation((r) =>
@@ -78,16 +88,16 @@ namespace TWAuto
                     Task.sendPost(url, new NameValueCollection());
                 } else
                 {
-                    LogManager.log("Not enough resources");
+                    LogManager.log("Not enough resources for " + building.Name);
                     processResult();
                 }
             };
              
             task.addOperation((r) =>
             {
-                if (building.Level == 0) //building new
+                if (building.Type > 4 && building.Level == 0) //building new, not for res
                 {
-                    LogManager.log("Building new");
+                    LogManager.log("Building new " + building.Name);
                     string category;
 
                     switch (building.Type)
@@ -137,7 +147,7 @@ namespace TWAuto
                     }
                 } else //upgrading building
                 {
-                    LogManager.log("Upgrading");
+                    LogManager.log("Upgrading " + building.Name);
                     var node = r.GetDoc().DocumentNode.SelectSingleNode("//button[@class='green build']");
                     //can build, green button
                     if (node != null)
@@ -257,6 +267,14 @@ namespace TWAuto
             if (timerElapsed != null)
             {
                 timerElapsed();
+            }
+        }
+
+        public static void RemoveAction(Action action)
+        {
+            if (BuildingQueueRemoved != null)
+            {
+                BuildingQueueRemoved(action);
             }
         }
     }

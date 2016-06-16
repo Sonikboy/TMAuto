@@ -15,13 +15,16 @@ namespace TWAuto
         public int Health { get; set; }
         public int HealthNormalAdventures { get; set; }
         public int HealthHardAdventures { get; set; }
-    
+        public bool CanNormal { get { return Health >= HealthNormalAdventures; } }
+        public bool CanHard { get { return Health >= HealthHardAdventures; } }
         public bool InVillage { get; set; }
 
         public Mode AdventureMode { get; set; }
 
         private Hero() {
-            AdventureMode = Mode.CLOSEST;
+            HealthNormalAdventures = 30;
+            HealthHardAdventures = 50;
+            AdventureMode = Mode.NONE;
         }
     }
 }

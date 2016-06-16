@@ -13,15 +13,31 @@ namespace TWAuto
     public partial class PickNewBuilding : Form
     {
         public int newBuildingType;
-        public PickNewBuilding()
+        public PickNewBuilding(int id, int[] builtTypes)
         {
             InitializeComponent();
             int tribe = Player.Instance.Tribe;
 
-            for (int i = 1; i <= 41; i++)
+            //place to build wall
+            if (id == 40)
             {
-                //wall for specific tribes or nonexisting building type
-                if (i == 12 || (i == 31 && tribe != 1) || (i == 32 && tribe != 2) || (i == 33 && tribe != 3))
+                listBox1.Items.Add(Buildings.GetName(Player.Instance.Tribe + 30));
+                listBox1.SelectedIndex = 0;
+                return;
+            }
+            //rally point only
+            if (id == 39)
+            {
+                listBox1.Items.Add(Buildings.GetName(16));
+                listBox1.SelectedIndex = 0;
+                return;
+            }
+
+            for (int i = 5; i <= 41; i++)
+            {
+                //nonexisting building, wonder, wall, rally point skip. those have methods above for their place
+                //tribe specific buildings
+                if ((builtTypes.Contains(i) && i != 10 && i!= 11 && i != 23)|| i == 12 || i == 16 || i == 31 || i == 32 || i == 33 || (i == 35 && tribe != 2) || (i == 36 && tribe != 3) || i == 40 || (i == 41 && tribe != 1) )
                 {
                     continue;
                 }

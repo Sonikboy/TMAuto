@@ -139,7 +139,7 @@ namespace TWAuto
                         var buildingLevel = vill.Buildings[id].Level;
                         int total = controller.GetOffset(vill, id) + buildingLevel;
                         var panel = (id < 18) ? resourcesPanel : buildingsPanel;
-                        panel.Controls[id].Text = buildingLevel + (total > buildingLevel ? "|" + total : "");
+                        panel.Controls[id >= 18 ? id - 18 : id].Text = buildingLevel + (total > buildingLevel ? "|" + total : "");
                     }
                 };
                 queueDgView.Columns[3].Visible = false;

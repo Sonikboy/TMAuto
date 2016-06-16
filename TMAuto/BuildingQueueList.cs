@@ -25,6 +25,7 @@ namespace TWAuto
 
             ListChanged(this, new ListChangedEventArgs(ListChangedType.ItemDeleted, index));
         }
+
         public QueuedBuilding First()
         {
             return Values[0];
@@ -172,7 +173,7 @@ namespace TWAuto
 
         public void Remove(object value)
         {
-            throw new NotImplementedException();
+            RemoveAt(Values.IndexOf((QueuedBuilding)value));
         }
 
         public void RemoveIndex(PropertyDescriptor property)

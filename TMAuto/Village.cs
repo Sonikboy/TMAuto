@@ -67,5 +67,10 @@ namespace TWAuto
         {
             return Farms.Select(f => f.Key).OrderBy(f => f.GetDistance(X, Y)).ToList();
         }
+
+        public void updateOngoingQueue(List<object> ongoingQueue)
+        {
+
+        }
     }
 }

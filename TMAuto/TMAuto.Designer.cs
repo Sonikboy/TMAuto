@@ -142,13 +142,15 @@
             // 
             // tbCtrlMain
             // 
+            this.tbCtrlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbCtrlMain.Controls.Add(this.tabPageAccount);
             this.tbCtrlMain.Controls.Add(this.tagPageBuildings);
             this.tbCtrlMain.Controls.Add(this.tabPageTroops);
             this.tbCtrlMain.Controls.Add(this.tabPageFarms);
             this.tbCtrlMain.Controls.Add(this.tabPageHero);
             this.tbCtrlMain.Controls.Add(this.tabPageLog);
-            this.tbCtrlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbCtrlMain.Location = new System.Drawing.Point(3, 3);
             this.tbCtrlMain.Name = "tbCtrlMain";
             this.tbCtrlMain.SelectedIndex = 0;
@@ -197,7 +199,7 @@
             this.tagPageBuildings.Controls.Add(this.tbCtrlBuildings);
             this.tagPageBuildings.Location = new System.Drawing.Point(4, 25);
             this.tagPageBuildings.Name = "tagPageBuildings";
-            this.tagPageBuildings.Size = new System.Drawing.Size(988, 343);
+            this.tagPageBuildings.Size = new System.Drawing.Size(988, 304);
             this.tagPageBuildings.TabIndex = 0;
             this.tagPageBuildings.Text = "Buildings";
             this.tagPageBuildings.UseVisualStyleBackColor = true;
@@ -208,14 +210,14 @@
             this.tbCtrlBuildings.Location = new System.Drawing.Point(0, 0);
             this.tbCtrlBuildings.Name = "tbCtrlBuildings";
             this.tbCtrlBuildings.SelectedIndex = 0;
-            this.tbCtrlBuildings.Size = new System.Drawing.Size(988, 343);
+            this.tbCtrlBuildings.Size = new System.Drawing.Size(988, 304);
             this.tbCtrlBuildings.TabIndex = 0;
             // 
             // tabPageTroops
             // 
             this.tabPageTroops.Location = new System.Drawing.Point(4, 25);
             this.tabPageTroops.Name = "tabPageTroops";
-            this.tabPageTroops.Size = new System.Drawing.Size(988, 343);
+            this.tabPageTroops.Size = new System.Drawing.Size(988, 304);
             this.tabPageTroops.TabIndex = 4;
             this.tabPageTroops.Text = "Troops";
             this.tabPageTroops.UseVisualStyleBackColor = true;
@@ -224,7 +226,7 @@
             // 
             this.tabPageFarms.Location = new System.Drawing.Point(4, 25);
             this.tabPageFarms.Name = "tabPageFarms";
-            this.tabPageFarms.Size = new System.Drawing.Size(988, 343);
+            this.tabPageFarms.Size = new System.Drawing.Size(988, 304);
             this.tabPageFarms.TabIndex = 6;
             this.tabPageFarms.Text = "Farms";
             this.tabPageFarms.UseVisualStyleBackColor = true;
@@ -240,7 +242,7 @@
             this.tabPageHero.Controls.Add(this.label3);
             this.tabPageHero.Location = new System.Drawing.Point(4, 25);
             this.tabPageHero.Name = "tabPageHero";
-            this.tabPageHero.Size = new System.Drawing.Size(988, 343);
+            this.tabPageHero.Size = new System.Drawing.Size(988, 304);
             this.tabPageHero.TabIndex = 5;
             this.tabPageHero.Text = "Hero";
             this.tabPageHero.UseVisualStyleBackColor = true;
@@ -367,7 +369,7 @@
             // 
             this.tabPageLog.Location = new System.Drawing.Point(4, 25);
             this.tabPageLog.Name = "tabPageLog";
-            this.tabPageLog.Size = new System.Drawing.Size(988, 343);
+            this.tabPageLog.Size = new System.Drawing.Size(988, 304);
             this.tabPageLog.TabIndex = 3;
             this.tabPageLog.Text = "Log";
             this.tabPageLog.UseVisualStyleBackColor = true;

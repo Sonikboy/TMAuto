@@ -14,6 +14,7 @@ namespace TWAuto
         private HttpClient httpClient;
         private Timer timer;
         private Action processResult;
+        private Player player = Player.Instance;
 
         public delegate void BuildingTimerHandler();
         public event BuildingTimerHandler BuildingTimerElapsed;
@@ -37,11 +38,11 @@ namespace TWAuto
         public void AddBuilding(Village village, int id, int priority = 0)
         {
             PriorityQueue queue = village.BuildingQueue;
-            
+
             var b = new QueuedBuilding() { Name = Buildings.GetName(village.Buildings[id].Type), Id = id };
             queue.Enqueue(priority, b);
             b.Level = village.Buildings[id].Level + GetOffset(village, id);
-    }
+        }
 
         public void RemoveBuilding(Village village, int index)
         {
@@ -52,7 +53,7 @@ namespace TWAuto
         public int GetOffset(Village village, int id)
         {
             PriorityQueue queue = village.BuildingQueue;
-            
+
             return queue.GetOffset(id);
         }
 
@@ -65,104 +66,198 @@ namespace TWAuto
                 return null;
             }
 
-            QueuedBuilding b = queue.Peek();
-            Building building = village.Buildings[b.Id];
-            Task task = new Task() { Name = "Build " + building.Name};
+            List<QueuedBuilding> b = new List<QueuedBuilding>();
+
+            //if roman => double queue check
+            if (player.Tribe == 1)
+            {
+                QueuedBuilding bRes = queue.Peek(BuildingType.Resource);
+                QueuedBuilding bBuild = queue.Peek(BuildingType.Building);
+
+                if (bRes != null)
+                {
+                    b.Add(bRes);
+                }
+                if (bBuild != null)
+                {
+                    b.Add(bBuild);
+                }
+            } else
+            {
+                QueuedBuilding build = queue.Peek();
+                b.Add(build);
+            }
+
+            Task task = new Task() { Name = "Build" };
             Settings settins = Settings.Instance;
 
             task.addOperation((r) =>
             {
-                LogManager.log("Checking resources in village " + village);
-                Task.sendGet("build.php?id=" + (b.Id + 1));
+                LogManager.log("Switching to village " + village);
+                Task.SwitchVillage(village.Id);
             });
 
-            Action<string> actionBuildNew = (r) =>
-            {
-                var node = r.GetDoc().DocumentNode.SelectSingleNode(String.Format("//button[@class='green new' and contains(@onclick,'a={0}')]", building.Type));
-
-                if (node != null)
-                {
-                    LogManager.log("Building " + building.Name);
-                    string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
-                    queue.Dequeue();
-                    Task.sendPost(url, new NameValueCollection());
-                } else
-                {
-                    LogManager.log("Not enough resources for " + building.Name);
-                    processResult();
-                }
-            };
-             
             task.addOperation((r) =>
             {
-                if (building.Type > 4 && building.Level == 0) //building new, not for res
+                LogManager.log("Analyzing building queue");
+
+                var docNode = r.GetDoc().DocumentNode;
+                var queueNodes = docNode.SelectNodes("//li[.//img[@class='del' and @title]]");
+                var queueMatch = Regex.Match(r, "bld=\\[(.*)\\]");
+                var queues = queueMatch.Groups[1].Value.Replace(",{", "?{").Split('?');
+                bool freeQueue = true;
+                
+                for (int buildingIndex = 0; buildingIndex < b.Count; buildingIndex++)
                 {
-                    LogManager.log("Building new " + building.Name);
-                    string category;
+                    QueuedBuilding queuedBuilding = b[buildingIndex];
+                    Building building = village.Buildings[queuedBuilding.Id];
+                    task.Name = "Build " + building.Name;
+                    var buildingIndexForThisLoop = buildingIndex;
+                    
+                    //if anything in queue
+                    if (queueNodes != null)
+                    {
+                        List<dynamic> buildQueue = new List<dynamic>();
 
-                    switch (building.Type)
-                    {
-                        //RESOURCES
-                        case 5:
-                        case 6:
-                        case 7:
-                        case 8:
-                        case 9:
-                            category = "3";
-                            break;
-                        case 13:
-                        case 14:
-                        case 16:
-                        case 19:
-                        case 20:
-                        case 21:
-                        case 22:
-                        case 29:
-                        case 30: 
-                        case 36:
-                        case 37:
-                            category = "2";
-                            break;
-                        case 31:
-                        case 32:
-                        case 33: // special, no need to switch to correct building type
-                        default:
-                            category = "1";
-                            break;
-                    }
-
-                    if (category == "1")
-                    {
-                        actionBuildNew(r);
-                    } else
-                    {
-                        //switch to correct buildings type
-                        task.addOperation((rr) =>
+                        for (int i = 0; i < queues.Count(); i++)
                         {
-                            actionBuildNew(rr);
-                        });
+                            Match match = Regex.Match(queues[i], "{\"stufe\":(.*),\"gid\":\"(.*)\",\"aid\":\"(.*)\"}");
 
-                        LogManager.log("switching category");
-                        Task.sendGet("build.php?id=" + (b.Id + 1) + "&category=" + category);
-                    }
-                } else //upgrading building
-                {
-                    LogManager.log("Upgrading " + building.Name);
-                    var node = r.GetDoc().DocumentNode.SelectSingleNode("//button[@class='green build']");
-                    //can build, green button
-                    if (node != null)
-                    {
-                        LogManager.log("Building " + building.Name);
-                        string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
-                        queue.Dequeue();
-                        Task.sendPost(url, new NameValueCollection());
+                            int level = int.Parse(match.Groups[1].Value);
+                            int type = int.Parse(match.Groups[2].Value);
+                            int id = int.Parse(match.Groups[3].Value);
+                            string time = queueNodes[i].SelectSingleNode(".//span[@class='timer']").InnerText;
+
+                            buildQueue.Add(new { Level = level, Type = type, Id = id, Time = time });
+                        }
+
+                        village.updateOngoingQueue(buildQueue);
+
+                        //roman
+                        if (player.Tribe == 1)
+                        {
+                            //res id < 18, building id >= 18
+                            freeQueue = (queuedBuilding.Id < 18 && buildQueue.Count(bq => bq.Id <= 18) == 0) || (queuedBuilding.Id >= 18 && buildQueue.Count(buq => buq.Id > 18) == 0);
+                        }
+                        else
+                        {
+                            freeQueue = buildQueue.Count == 0;
+                        }
                     }
                     else
                     {
-                        LogManager.log("Not enough resources to build " + building.Name);
-                        processResult();
+                        //nothing in queue
+                        freeQueue = true;
                     }
-                }  
+
+                    if (freeQueue)
+                    {
+                        task.addOperation((rr) =>
+                        {
+                            task.addOperation((rrr) =>
+                            {
+                                LogManager.log("Checking resources");
+                                Task.sendGet("build.php?id=" + (queuedBuilding.Id + 1));
+                            });
+
+                            Action<string> actionBuildNew = (rrr) =>
+                            {  
+                                var node = rrr.GetDoc().DocumentNode.SelectSingleNode(String.Format("//button[@class='green new' and contains(@onclick,'a={0}')]", building.Type));
+
+                                if (node != null)
+                                {
+                                    LogManager.log("Building " + building.Name);
+                                    string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
+                                    queue.Remove(queuedBuilding);
+                                    Task.sendPost(url, new NameValueCollection());
+                                }
+                                else
+                                {
+                                    LogManager.log("Not enough resources for " + building.Name);
+                                    processResult();
+                                }
+                            };
+
+                            task.addOperation((rrr) =>
+                            {
+                                if (building.Type > 4 && building.Level == 0) //building new, not for res
+                                {
+                                    LogManager.log("Building new " + building.Name);
+                                    string category;
+
+                                    switch (building.Type)
+                                    {
+                                        //RESOURCES
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                        case 8:
+                                        case 9:
+                                            category = "3";
+                                            break;
+                                        case 13:
+                                        case 14:
+                                        case 16:
+                                        case 19:
+                                        case 20:
+                                        case 21:
+                                        case 22:
+                                        case 29:
+                                        case 30:
+                                        case 36:
+                                        case 37:
+                                            category = "2";
+                                            break;
+                                        case 31:
+                                        case 32:
+                                        case 33: // special, no need to switch to correct building type
+                                        default:
+                                            category = "1";
+                                            break;
+                                    }
+
+                                    if (category == "1")
+                                    {
+                                        actionBuildNew(rrr);
+                                    }
+                                    else
+                                    {
+                                        //switch to correct buildings type
+                                        task.addOperation((rrrr) =>
+                                        {
+                                            actionBuildNew(rrrr);
+                                        });
+
+                                        LogManager.log("switching category");
+                                        Task.sendGet("build.php?id=" + (queuedBuilding.Id + 1) + "&category=" + category);
+                                    }
+                                }
+                                else //upgrading building
+                                {
+                                    LogManager.log("Upgrading " + building.Name);
+                                    var node = rrr.GetDoc().DocumentNode.SelectSingleNode("//button[@class='green build']");
+                                    //can build, green button
+                                    if (node != null)
+                                    {
+                                        LogManager.log("Building " + building.Name);
+                                        string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
+                                        queue.Remove(queuedBuilding);
+                                        Task.sendPost(url, new NameValueCollection());
+                                    }
+                                    else
+                                    {
+                                        LogManager.log("Not enough resources to build " + building.Name);
+                                        processResult();
+                                    }
+                                }
+                            });
+
+                            processResult();
+                        });
+                    }
+                }
+
+                processResult();
             });
 
             return task;
@@ -175,7 +270,7 @@ namespace TWAuto
             task.addOperation((r) =>
             {
                 LogManager.log("Checking resources in village " + village);
-                Task.sendGet("dorf1.php?newdid=" + village.Id + "&");
+                Task.SwitchVillage(village.Id);
             });
 
             var buildings = village.Buildings;
@@ -199,7 +294,7 @@ namespace TWAuto
                 }
 
                 LogManager.log("Checking buildings in village " + village);
-                Task.sendGet("dorf2.php?newdid=" + village.Id + "&");
+                Task.sendGet("dorf2.php");
             });
 
             task.addOperation((r) =>

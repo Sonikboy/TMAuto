@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace TWAuto
 {
+    public enum BuildingType { Resource, Building }
     static class Buildings
     {
         private static string[] names = new string[41] {

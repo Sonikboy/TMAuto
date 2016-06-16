@@ -65,6 +65,11 @@ namespace TWAuto
             return "http://" + Settings.Instance.Server + "/" + path;
         }
 
+        public static void SwitchVillage(string id)
+        {
+            sendGet("dorf1.php?newdid=" + id + "&");
+        }
+
         public static byte[] send(string url, NameValueCollection content)
         {
             return httpClient.UploadValues(new Uri(url), content);

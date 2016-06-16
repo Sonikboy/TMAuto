@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TWAuto
+namespace TMAuto
 {
     public enum Mode { NONE, CLOSEST, FURTHEST, RANDOM}
     sealed class Hero

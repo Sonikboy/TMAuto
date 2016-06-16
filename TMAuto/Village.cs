@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TWAuto
+namespace TMAuto
 {
     class Village
     {
@@ -70,7 +70,28 @@ namespace TWAuto
 
         public void updateOngoingQueue(List<object> ongoingQueue)
         {
+            List<dynamic> list = ongoingQueue;
 
+            for (int i = 0; i < list.Count; i++)
+            {
+                var b = list[i];
+                var building = Buildings[b.Id - 1];
+
+                if (i == 0)
+                {
+                    building.OnGoing = 1;
+                } else
+                {
+                    building.OnGoing++;
+                }
+                
+                if (building.Level == 0)
+                {
+                    building.Type = b.Type;
+                }
+
+                System.Windows.Forms.MessageBox.Show(building.Name + " " + building.Level + " " + building.OnGoing + " " + building.Total + "");
+            }
         }
     }
 }

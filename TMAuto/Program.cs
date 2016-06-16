@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TWAuto
+namespace TMAuto
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace TWAuto
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TMAuto());
+            Application.Run(new TravianBot());
         }
     }
 }

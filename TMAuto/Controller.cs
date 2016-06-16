@@ -8,7 +8,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
 
-namespace TWAuto
+namespace TMAuto
 {
     class Controller
     {
@@ -134,11 +134,19 @@ namespace TWAuto
             //login task
             currentTask = tasks.Dequeue();
             currentTask.Start();
+
+            if (saveResponses)
+            {
+                if (Directory.Exists("responses"))
+                {
+                    Directory.Delete("responses", true);
+                }
+            }
         }
 
-        public int GetOffset(Village village, int id)
+        /*public int GetOffset(Village village, int id)
         {
             return buildingManager.GetOffset(village, id);
-        }
+        }*/
     } 
 }

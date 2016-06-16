@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
 
-namespace TWAuto
+namespace TMAuto
 {
     class BuildingManager
     {
@@ -41,14 +41,17 @@ namespace TWAuto
 
             var b = new QueuedBuilding() { Name = Buildings.GetName(village.Buildings[id].Type), Id = id };
             queue.Enqueue(priority, b);
-            b.Level = village.Buildings[id].Level + GetOffset(village, id);
+            var building = village.Buildings[id];
+            building.Offset = GetOffset(village, id);
+            b.Level = building.Total;
         }
 
         public void RemoveBuilding(Village village, int index)
         {
             PriorityQueue queue = village.BuildingQueue;
 
-            queue.RemoveAt(index);
+            dynamic forBuilding = queue.RemoveAt(index);
+            village.Buildings[forBuilding.Id].Offset = forBuilding.Offset;
         }
         public int GetOffset(Village village, int id)
         {
@@ -99,13 +102,13 @@ namespace TWAuto
 
             task.addOperation((r) =>
             {
-                LogManager.log("Analyzing building queue");
+                /*LogManager.log("Analyzing building queue");
 
                 var docNode = r.GetDoc().DocumentNode;
                 var queueNodes = docNode.SelectNodes("//li[.//img[@class='del' and @title]]");
                 var queueMatch = Regex.Match(r, "bld=\\[(.*)\\]");
-                var queues = queueMatch.Groups[1].Value.Replace(",{", "?{").Split('?');
-                bool freeQueue = true;
+                var queues = queueMatch.Groups[1].Value.Replace(",{", "?{").Split('?');*/
+                bool freeQueue = false;
                 
                 for (int buildingIndex = 0; buildingIndex < b.Count; buildingIndex++)
                 {
@@ -113,9 +116,27 @@ namespace TWAuto
                     Building building = village.Buildings[queuedBuilding.Id];
                     task.Name = "Build " + building.Name;
                     var buildingIndexForThisLoop = buildingIndex;
+
+                    var ongoingBuildingQueue = Task.GetOngoingBuildingQueue(village, r);
+
+                    //if anything in queue
+                    if (ongoingBuildingQueue.Count != 0)
+                    {
+                        //romans can dual build so check
+                        if (player.Tribe == 1)
+                        {
+                            //res id < 18, building id >= 18
+                            freeQueue = (queuedBuilding.Id < 18 && ongoingBuildingQueue.Count(bq => bq.Id <= 18) == 0) || (queuedBuilding.Id >= 18 && ongoingBuildingQueue.Count(buq => buq.Id > 18) == 0);
+                        }
+                    } 
+                    else
+                    {
+                        //nothing in queue
+                        freeQueue = true;
+                    }
                     
                     //if anything in queue
-                    if (queueNodes != null)
+                    /*if (queueNodes != null)
                     {
                         List<dynamic> buildQueue = new List<dynamic>();
 
@@ -148,7 +169,7 @@ namespace TWAuto
                     {
                         //nothing in queue
                         freeQueue = true;
-                    }
+                    }*/
 
                     if (freeQueue)
                     {
@@ -277,6 +298,8 @@ namespace TWAuto
 
             task.addOperation((r) =>
             {
+                //analyze ongoing building queues
+                Task.GetOngoingBuildingQueue(village, r);
                 //process resources info
                 var vNode = r.GetDoc().DocumentNode.SelectSingleNode("//div[@id='village_map']");
                 village.Type = vNode.Attributes["class"].Value;

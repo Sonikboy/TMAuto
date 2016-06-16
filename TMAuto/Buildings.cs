@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TWAuto
+namespace TMAuto
 {
     public enum BuildingType { Resource, Building }
     static class Buildings

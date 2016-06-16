@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace TWAuto
+namespace TMAuto
 {
     class Task
     {
@@ -73,6 +74,39 @@ namespace TWAuto
         public static byte[] send(string url, NameValueCollection content)
         {
             return httpClient.UploadValues(new Uri(url), content);
+        }
+        //returns queue
+        public static List<dynamic> GetOngoingBuildingQueue(Village village, string result)
+        {
+            LogManager.log("Analyzing building queue");
+
+            var docNode = result.GetDoc().DocumentNode;
+            var queueNodes = docNode.SelectNodes("//li[.//img[@class='del' and @title]]");
+            var queueMatch = Regex.Match(result, "bld=\\[(.*)\\]");
+            var queues = queueMatch.Groups[1].Value.Replace(",{", "?{").Split('?');
+
+            List<dynamic> buildQueue = new List<dynamic>();
+
+            //no queue
+            if (queueNodes == null)
+            {
+                return buildQueue;
+            }
+
+            for (int i = 0; i < queues.Count(); i++)
+            {
+                Match match = Regex.Match(queues[i], "{\"stufe\":(.*),\"gid\":\"(.*)\",\"aid\":\"(.*)\"}");
+
+                int type = int.Parse(match.Groups[2].Value);
+                int id = int.Parse(match.Groups[3].Value);
+                string time = queueNodes[i].SelectSingleNode(".//span[@class='timer']").InnerText;
+
+                buildQueue.Add(new { Type = type, Id = id, Time = time });
+            }
+
+            village.updateOngoingQueue(buildQueue);
+
+            return buildQueue;
         }
     }
 }

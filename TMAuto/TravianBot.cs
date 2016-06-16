@@ -14,14 +14,14 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace TWAuto
+namespace TMAuto
 {
-    public partial class TMAuto : Form
+    public partial class TravianBot : Form
     {
         private Controller controller = new Controller();
         private Hero hero = Hero.Instance;
         private int villageIndex = 0;
-        public TMAuto()
+        public TravianBot()
         {
             InitializeComponent();
             initComponents();
@@ -48,11 +48,12 @@ namespace TWAuto
             BuildingManager.TabVillagesPanelCreated += new BuildingManager.CreateTabVillagesPanelHandler(controller_TabVillagesPanelCreated);
             BuildingManager.BuildingQueueRemoved += new BuildingManager.RemoveBuildingQueueHandler(BuildingManager_BuildingQueueRemoved);
             LogManager.LogUpdated += new LogManager.UpdateLogHandler(controller_LogUpdated);
+            Building.ButtonTextUpdated += new Building.ButtonTextUpdateHandler(building_ButtonTextUpdated);
         }
 
         private void BuildingManager_BuildingQueueRemoved(Action action)
         {
-            this.Invoke(new Action(() => action.Invoke()));
+            Invoke(new Action(() => action.Invoke()));
         }
 
         private void controller_LogUpdated(string message)
@@ -121,7 +122,6 @@ namespace TWAuto
                 queueDgView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = "Text" });
                 queueDgView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = "Time" });
                 queueDgView.Columns.Add(new DataGridViewButtonColumn() { Text = "X", UseColumnTextForButtonValue = true });
-                queueDgView.Columns.Add("Id", "Id");
                 queueDgView.MultiSelect = false;
                 queueDgView.RowHeadersVisible = false;
                 queueDgView.AutoGenerateColumns = false;
@@ -135,14 +135,9 @@ namespace TWAuto
                         int id = ((QueuedBuilding)senderGrid.Rows[e.RowIndex].DataBoundItem).Id;
 
                         controller.RemoveBuildingFromQueue(vill, e.RowIndex);
-
-                        var buildingLevel = vill.Buildings[id].Level;
-                        int total = controller.GetOffset(vill, id) + buildingLevel;
-                        var panel = (id < 18) ? resourcesPanel : buildingsPanel;
-                        panel.Controls[id >= 18 ? id - 18 : id].Text = buildingLevel + (total > buildingLevel ? "|" + total : "");
                     }
                 };
-                queueDgView.Columns[3].Visible = false;
+
                 var list = village.BuildingQueue.List;
                 queueDgView.DataSource = list;
 
@@ -157,12 +152,11 @@ namespace TWAuto
                     }
                     else
                     {
-                        button = new Button { Image = b.BuildingImage, Text = b.Level + "", AutoSize = true };
+                        button = new Button { Image = b.BuildingImage, AutoSize = true };
                     }
 
-
                     button.Font = new Font(button.Font.Name, button.Font.Size, FontStyle.Bold);
-
+                    
                     int id = j;
                     button.Click += new EventHandler((s, e) =>
                     {
@@ -187,9 +181,9 @@ namespace TWAuto
                         }
 
                         controller.AddBuildingToQueue(vill, id);
-                        int total = controller.GetOffset(vill, id) + building.Level;
-                        button.Text = building.Level + "|" + total;
                     });
+
+                    button.DataBindings.Add("Text", b, "ButtonText");
 
                     if (j < 18)
                     {
@@ -248,5 +242,11 @@ namespace TWAuto
         {
             hero.HealthHardAdventures = (int)numericUpDownHard.Value;
         }
-    }
+
+        private void building_ButtonTextUpdated(Action action)
+        {
+            Invoke(new Action(() => action.Invoke()));
+        }
+
+    }      
 }

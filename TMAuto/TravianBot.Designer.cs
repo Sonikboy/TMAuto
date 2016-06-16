@@ -1,6 +1,6 @@
-﻿namespace TWAuto
+﻿namespace TMAuto
 {
-    partial class TMAuto
+    partial class TravianBot
     {
         /// <summary>
         /// Required designer variable.

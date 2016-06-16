@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TWAuto
+namespace TMAuto
 {
     class PriorityQueue
     {
@@ -44,11 +44,16 @@ namespace TWAuto
             return List.Count(i => i.Value.Id == id);
         }
 
-        public void RemoveAt(int index)
+        //returns new building offset
+        public dynamic RemoveAt(int index)
         {
             Action remove = () => List.RemoveAt(index);
 
+            int id = List.ElementAt(index).Value.Id;
             BuildingManager.RemoveAction(remove);
+
+            int offset = GetOffset(id);
+            return new { Offset = offset, Id = id };
         }
 
         public void Remove(QueuedBuilding building)

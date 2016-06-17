@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,8 @@ namespace TMAuto
         public Dictionary<Farm, Army> Farms { get; set; }
         public PriorityQueue BuildingQueue { get; set; }
 
+        public OngoingQueueList OngoingQueue { get; set; }
+
         public Village()
         {
             Buildings = new Building[40];
@@ -42,7 +45,7 @@ namespace TMAuto
             ArmyAvailable = new Army();
             Farms = new Dictionary<Farm, Army>();
             BuildingQueue = new PriorityQueue();
-
+            OngoingQueue = new OngoingQueueList();
 
             for (int i = 0; i < 40; i++)
             {
@@ -68,13 +71,14 @@ namespace TMAuto
             return Farms.Select(f => f.Key).OrderBy(f => f.GetDistance(X, Y)).ToList();
         }
 
-        public void updateOngoingQueue(List<object> ongoingQueue)
+        public void updateOngoingQueue(OngoingQueueList ongoingQueue)
         {
-            List<dynamic> list = ongoingQueue;
+            OngoingQueue.Clear();
+            OngoingQueue.AddRange(ongoingQueue);
 
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < ongoingQueue.Count; i++)
             {
-                var b = list[i];
+                var b = ongoingQueue[i];
                 var building = Buildings[b.Id - 1];
 
                 if (i == 0)
@@ -89,8 +93,6 @@ namespace TMAuto
                 {
                     building.Type = b.Type;
                 }
-
-                System.Windows.Forms.MessageBox.Show(building.Name + " " + building.Level + " " + building.OnGoing + " " + building.Total + "");
             }
         }
     }

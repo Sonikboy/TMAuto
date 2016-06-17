@@ -19,6 +19,7 @@ namespace TMAuto
     public partial class TravianBot : Form
     {
         private Controller controller = new Controller();
+        private Player player = Player.Instance;
         private Hero hero = Hero.Instance;
         private int villageIndex = 0;
         public TravianBot()
@@ -49,6 +50,7 @@ namespace TMAuto
             BuildingManager.BuildingQueueRemoved += new BuildingManager.RemoveBuildingQueueHandler(BuildingManager_BuildingQueueRemoved);
             LogManager.LogUpdated += new LogManager.UpdateLogHandler(controller_LogUpdated);
             Building.ButtonTextUpdated += new Building.ButtonTextUpdateHandler(building_ButtonTextUpdated);
+            player.OngoingQueueChanged += new Player.OngoingQueueChangedHandler(ongoingQueueHandler);
         }
 
         private void BuildingManager_BuildingQueueRemoved(Action action)
@@ -118,6 +120,14 @@ namespace TMAuto
                 tablePanel.RowStyles.Add(new RowStyle());
                 tablePanel.RowStyles.Add(new RowStyle());
 
+                DataGridView ongoingQueueDgView = new DataGridView() { Anchor = AnchorStyles.Bottom, Dock = DockStyle.Fill };
+                ongoingQueueDgView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = "Name" });
+                ongoingQueueDgView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = "Level" });
+                ongoingQueueDgView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = "Time" });
+                ongoingQueueDgView.RowHeadersVisible = false;
+                ongoingQueueDgView.AutoGenerateColumns = false;
+                ongoingQueueDgView.DataSource = village.OngoingQueue;
+
                 DataGridView queueDgView = new DataGridView() { Anchor = AnchorStyles.Bottom, Dock = DockStyle.Fill };
                 queueDgView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = "Text" });
                 queueDgView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = "Time" });
@@ -131,7 +141,7 @@ namespace TMAuto
 
                     if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
                     {
-                        Village vill = Player.Instance.Villages[villageIndex];
+                        Village vill = getSelectedVillage();
                         int id = ((QueuedBuilding)senderGrid.Rows[e.RowIndex].DataBoundItem).Id;
 
                         controller.RemoveBuildingFromQueue(vill, e.RowIndex);
@@ -160,7 +170,7 @@ namespace TMAuto
                     int id = j;
                     button.Click += new EventHandler((s, e) =>
                     {
-                        Village vill = Player.Instance.Villages[villageIndex];
+                        Village vill = getSelectedVillage();
                         var buildings = vill.Buildings;
                         var building = buildings[id];
 
@@ -198,6 +208,7 @@ namespace TMAuto
                 tablePanel.Controls.Add(resourcesPanel);
                 tablePanel.Controls.Add(buildingsPanel);
                 tablePanel.Controls.Add(queueDgView);
+                tablePanel.Controls.Add(ongoingQueueDgView);
 
                 villagePage.Controls.Add(tablePanel);
 
@@ -248,5 +259,14 @@ namespace TMAuto
             Invoke(new Action(() => action.Invoke()));
         }
 
+        private Village getSelectedVillage()
+        {
+            return Player.Instance.Villages[villageIndex];
+        }
+
+        private void ongoingQueueHandler(ListChangedEventHandler listChanged, object sender, ListChangedEventArgs e)
+        {
+            Invoke(new Action(() => listChanged(sender, e)));
+        }
     }      
 }

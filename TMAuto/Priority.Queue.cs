@@ -56,11 +56,15 @@ namespace TMAuto
             return new { Offset = offset, Id = id };
         }
 
-        public void Remove(QueuedBuilding building)
+        public dynamic Remove(QueuedBuilding building)
         {
             Action remove = () => List.Remove(building);
 
+            int id = building.Id;
             BuildingManager.RemoveAction(remove);
+
+            int offset = GetOffset(id);
+            return new { Offset = offset, Id = id };
         }
     }
 }

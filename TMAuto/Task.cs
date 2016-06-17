@@ -76,7 +76,7 @@ namespace TMAuto
             return httpClient.UploadValues(new Uri(url), content);
         }
         //returns queue
-        public static List<dynamic> GetOngoingBuildingQueue(Village village, string result)
+        public static OngoingQueueList GetOngoingBuildingQueue(Village village, string result)
         {
             LogManager.log("Analyzing building queue");
 
@@ -85,28 +85,32 @@ namespace TMAuto
             var queueMatch = Regex.Match(result, "bld=\\[(.*)\\]");
             var queues = queueMatch.Groups[1].Value.Replace(",{", "?{").Split('?');
 
-            List<dynamic> buildQueue = new List<dynamic>();
+            OngoingQueueList buildQueue = new OngoingQueueList();
 
-            //no queue
-            if (queueNodes == null)
+            //is some queue
+            if (queueNodes != null)
             {
-                return buildQueue;
-            }
+                for (int i = 0; i < queues.Count(); i++)
+                {
+                    Match match = Regex.Match(queues[i], "{\"stufe\":(.*),\"gid\":\"(.*)\",\"aid\":\"(.*)\"}");
 
-            for (int i = 0; i < queues.Count(); i++)
-            {
-                Match match = Regex.Match(queues[i], "{\"stufe\":(.*),\"gid\":\"(.*)\",\"aid\":\"(.*)\"}");
+                    string level = match.Groups[1].Value;
+                    int type = int.Parse(match.Groups[2].Value);
+                    int id = int.Parse(match.Groups[3].Value);
+                    string time = queueNodes[i].SelectSingleNode(".//span[@class='timer']").InnerText;
 
-                int type = int.Parse(match.Groups[2].Value);
-                int id = int.Parse(match.Groups[3].Value);
-                string time = queueNodes[i].SelectSingleNode(".//span[@class='timer']").InnerText;
-
-                buildQueue.Add(new { Type = type, Id = id, Time = time });
+                    buildQueue.Add(new OngoingQueueBuilding { Type = type, Level = level, Id = id, Time = time });
+                }
             }
 
             village.updateOngoingQueue(buildQueue);
 
             return buildQueue;
+        }
+
+        public void Count()
+        {
+            System.Windows.Forms.MessageBox.Show(operations.Count +"");
         }
     }
 }

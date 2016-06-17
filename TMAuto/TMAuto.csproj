@@ -85,6 +85,8 @@
     <Compile Include="IOHandler.cs" />
     <Compile Include="LoginManager.cs" />
     <Compile Include="LogManager.cs" />
+    <Compile Include="OngoingQueueBuilding.cs" />
+    <Compile Include="OngoingQueueList.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="PickNewBuilding.cs">
       <SubType>Form</SubType>

@@ -25,7 +25,7 @@ namespace TMAuto
                 player.Tribe = int.Parse(Regex.Match(r, "nation nation(.)").Groups[1].Value);
                 var nodes = r.GetDoc().DocumentNode.SelectNodes("//a[contains(@href, 'newdid')]");
 
-                player.Villages = nodes.Select(n =>
+                var newVillages = nodes.Select(n =>
                 {
                     string id = Regex.Match(n.Attributes["href"].Value, "(\\d+)").Groups[1].Value;
                     string name = n.ChildNodes["div"].InnerText;
@@ -34,7 +34,12 @@ namespace TMAuto
                     Match coordsMatch = Regex.Match(coords, "(\\d+)[^\\d]+(\\d+)");
 
                     return new Village() { Id = id, Name = name, X = int.Parse(coordsMatch.Groups[1].Value), Y = int.Parse(coordsMatch.Groups[2].Value) };
-                }).ToList();
+                });
+
+                for (int i = 0; i < newVillages.Count(); i++)
+                {
+                    player.AddVillage(newVillages.ElementAt(i));
+                }
 
                 processResult();
             });

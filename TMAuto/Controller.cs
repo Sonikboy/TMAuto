@@ -35,8 +35,6 @@ namespace TMAuto
             
             initHandlers();
             initTasks();
-
-            buildingManager.StartTimer();
         }
 
         private void initHandlers()
@@ -78,19 +76,19 @@ namespace TMAuto
 
         private void buildingManager_BuildingTimerElapsed()
         {
-            Task buildingTask = buildingManager.GetBuildingTask(currentVillage);
-
-            if (buildingTask != null)
+            for (int i = 0; i < player.Villages.Count; i++)
             {
-                if (currentTask == null)
-                {
-                    currentTask = buildingTask;
-                    currentTask.ExecuteNextOperation("");
+                var nextTask = buildingManager.GetBuildingTask(player.Villages[i]);
+
+                if (nextTask != null) {
+                    tasks.Enqueue(nextTask);
                 }
-                else
-                {
-                    tasks.Enqueue(buildingTask);
-                }
+            }
+
+            if (tasks.Count != 0 && currentTask == null)
+            {
+                currentTask = tasks.Dequeue();
+                currentTask.ExecuteNextOperation("");
             }
         }
 
@@ -142,11 +140,8 @@ namespace TMAuto
                     Directory.Delete("responses", true);
                 }
             }
-        }
 
-        /*public int GetOffset(Village village, int id)
-        {
-            return buildingManager.GetOffset(village, id);
-        }*/
+            buildingManager.StartTimer();
+        }
     } 
 }

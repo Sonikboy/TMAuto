@@ -62,6 +62,8 @@ namespace TMAuto
 
         public Task GetBuildingTask(Village village)
         {
+            Task task = new Task() { Name = "Build" };
+
             PriorityQueue queue = village.BuildingQueue;
 
             if (queue.Empty())
@@ -91,9 +93,6 @@ namespace TMAuto
                 b.Add(build);
             }
 
-            Task task = new Task() { Name = "Build" };
-            Settings settins = Settings.Instance;
-
             task.addOperation((r) =>
             {
                 LogManager.log("Switching to village " + village);
@@ -102,14 +101,9 @@ namespace TMAuto
 
             task.addOperation((r) =>
             {
-                /*LogManager.log("Analyzing building queue");
+                var ongoingBuildingQueue = Task.GetOngoingBuildingQueue(village, r);
+                bool freeQueue = ongoingBuildingQueue.Count == 0;
 
-                var docNode = r.GetDoc().DocumentNode;
-                var queueNodes = docNode.SelectNodes("//li[.//img[@class='del' and @title]]");
-                var queueMatch = Regex.Match(r, "bld=\\[(.*)\\]");
-                var queues = queueMatch.Groups[1].Value.Replace(",{", "?{").Split('?');*/
-                bool freeQueue = false;
-                
                 for (int buildingIndex = 0; buildingIndex < b.Count; buildingIndex++)
                 {
                     QueuedBuilding queuedBuilding = b[buildingIndex];
@@ -117,10 +111,8 @@ namespace TMAuto
                     task.Name = "Build " + building.Name;
                     var buildingIndexForThisLoop = buildingIndex;
 
-                    var ongoingBuildingQueue = Task.GetOngoingBuildingQueue(village, r);
-
                     //if anything in queue
-                    if (ongoingBuildingQueue.Count != 0)
+                    if (!freeQueue)
                     {
                         //romans can dual build so check
                         if (player.Tribe == 1)
@@ -128,48 +120,7 @@ namespace TMAuto
                             //res id < 18, building id >= 18
                             freeQueue = (queuedBuilding.Id < 18 && ongoingBuildingQueue.Count(bq => bq.Id <= 18) == 0) || (queuedBuilding.Id >= 18 && ongoingBuildingQueue.Count(buq => buq.Id > 18) == 0);
                         }
-                    } 
-                    else
-                    {
-                        //nothing in queue
-                        freeQueue = true;
                     }
-                    
-                    //if anything in queue
-                    /*if (queueNodes != null)
-                    {
-                        List<dynamic> buildQueue = new List<dynamic>();
-
-                        for (int i = 0; i < queues.Count(); i++)
-                        {
-                            Match match = Regex.Match(queues[i], "{\"stufe\":(.*),\"gid\":\"(.*)\",\"aid\":\"(.*)\"}");
-
-                            int level = int.Parse(match.Groups[1].Value);
-                            int type = int.Parse(match.Groups[2].Value);
-                            int id = int.Parse(match.Groups[3].Value);
-                            string time = queueNodes[i].SelectSingleNode(".//span[@class='timer']").InnerText;
-
-                            buildQueue.Add(new { Level = level, Type = type, Id = id, Time = time });
-                        }
-
-                        village.updateOngoingQueue(buildQueue);
-
-                        //roman
-                        if (player.Tribe == 1)
-                        {
-                            //res id < 18, building id >= 18
-                            freeQueue = (queuedBuilding.Id < 18 && buildQueue.Count(bq => bq.Id <= 18) == 0) || (queuedBuilding.Id >= 18 && buildQueue.Count(buq => buq.Id > 18) == 0);
-                        }
-                        else
-                        {
-                            freeQueue = buildQueue.Count == 0;
-                        }
-                    }
-                    else
-                    {
-                        //nothing in queue
-                        freeQueue = true;
-                    }*/
 
                     if (freeQueue)
                     {
@@ -182,14 +133,15 @@ namespace TMAuto
                             });
 
                             Action<string> actionBuildNew = (rrr) =>
-                            {  
+                            {
                                 var node = rrr.GetDoc().DocumentNode.SelectSingleNode(String.Format("//button[@class='green new' and contains(@onclick,'a={0}')]", building.Type));
 
                                 if (node != null)
                                 {
                                     LogManager.log("Building " + building.Name);
                                     string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
-                                    queue.Remove(queuedBuilding);
+                                    var bb = queue.Remove(queuedBuilding);
+                                    building.Offset = bb.Offset;
                                     Task.sendPost(url, new NameValueCollection());
                                 }
                                 else
@@ -262,7 +214,8 @@ namespace TMAuto
                                     {
                                         LogManager.log("Building " + building.Name);
                                         string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
-                                        queue.Remove(queuedBuilding);
+                                        var bb = queue.Remove(queuedBuilding);
+                                        building.Offset = bb.Offset;
                                         Task.sendPost(url, new NameValueCollection());
                                     }
                                     else

@@ -87,7 +87,7 @@ namespace TMAuto
 
             if (hero.AdventureMode != Mode.NONE) tasks.Enqueue(heroManager.GetCheckHeroTask());
 
-            if (currentTask == null)
+            if (tasks.Count > 0 && currentTask == null)
             {
                 currentTask = tasks.Dequeue();
                 currentTask.ExecuteNextOperation("");

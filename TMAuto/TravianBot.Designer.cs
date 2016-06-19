@@ -57,6 +57,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageLog = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.chkBoxPreferHard = new System.Windows.Forms.CheckBox();
+            this.lblMaxTravelTime = new System.Windows.Forms.Label();
+            this.numericUpDownMaxTravelTime = new System.Windows.Forms.NumericUpDown();
             this.tbCtrlMain.SuspendLayout();
             this.tabPageAccount.SuspendLayout();
             this.tagPageBuildings.SuspendLayout();
@@ -65,6 +68,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormal)).BeginInit();
             this.groupBoxAdventureMode.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTravelTime)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -199,7 +203,7 @@
             this.tagPageBuildings.Controls.Add(this.tbCtrlBuildings);
             this.tagPageBuildings.Location = new System.Drawing.Point(4, 25);
             this.tagPageBuildings.Name = "tagPageBuildings";
-            this.tagPageBuildings.Size = new System.Drawing.Size(988, 304);
+            this.tagPageBuildings.Size = new System.Drawing.Size(988, 343);
             this.tagPageBuildings.TabIndex = 0;
             this.tagPageBuildings.Text = "Buildings";
             this.tagPageBuildings.UseVisualStyleBackColor = true;
@@ -210,14 +214,14 @@
             this.tbCtrlBuildings.Location = new System.Drawing.Point(0, 0);
             this.tbCtrlBuildings.Name = "tbCtrlBuildings";
             this.tbCtrlBuildings.SelectedIndex = 0;
-            this.tbCtrlBuildings.Size = new System.Drawing.Size(988, 304);
+            this.tbCtrlBuildings.Size = new System.Drawing.Size(988, 343);
             this.tbCtrlBuildings.TabIndex = 0;
             // 
             // tabPageTroops
             // 
             this.tabPageTroops.Location = new System.Drawing.Point(4, 25);
             this.tabPageTroops.Name = "tabPageTroops";
-            this.tabPageTroops.Size = new System.Drawing.Size(988, 304);
+            this.tabPageTroops.Size = new System.Drawing.Size(988, 343);
             this.tabPageTroops.TabIndex = 4;
             this.tabPageTroops.Text = "Troops";
             this.tabPageTroops.UseVisualStyleBackColor = true;
@@ -226,13 +230,16 @@
             // 
             this.tabPageFarms.Location = new System.Drawing.Point(4, 25);
             this.tabPageFarms.Name = "tabPageFarms";
-            this.tabPageFarms.Size = new System.Drawing.Size(988, 304);
+            this.tabPageFarms.Size = new System.Drawing.Size(988, 343);
             this.tabPageFarms.TabIndex = 6;
             this.tabPageFarms.Text = "Farms";
             this.tabPageFarms.UseVisualStyleBackColor = true;
             // 
             // tabPageHero
             // 
+            this.tabPageHero.Controls.Add(this.numericUpDownMaxTravelTime);
+            this.tabPageHero.Controls.Add(this.lblMaxTravelTime);
+            this.tabPageHero.Controls.Add(this.chkBoxPreferHard);
             this.tabPageHero.Controls.Add(this.numericUpDownHard);
             this.tabPageHero.Controls.Add(this.numericUpDownNormal);
             this.tabPageHero.Controls.Add(this.label6);
@@ -242,7 +249,7 @@
             this.tabPageHero.Controls.Add(this.label3);
             this.tabPageHero.Location = new System.Drawing.Point(4, 25);
             this.tabPageHero.Name = "tabPageHero";
-            this.tabPageHero.Size = new System.Drawing.Size(988, 304);
+            this.tabPageHero.Size = new System.Drawing.Size(988, 343);
             this.tabPageHero.TabIndex = 5;
             this.tabPageHero.Text = "Hero";
             this.tabPageHero.UseVisualStyleBackColor = true;
@@ -297,7 +304,7 @@
             this.groupBoxAdventureMode.Controls.Add(this.rdBtnClosest);
             this.groupBoxAdventureMode.Controls.Add(this.rdBtnRandom);
             this.groupBoxAdventureMode.Controls.Add(this.rdBtnFurthest);
-            this.groupBoxAdventureMode.Location = new System.Drawing.Point(28, 177);
+            this.groupBoxAdventureMode.Location = new System.Drawing.Point(28, 210);
             this.groupBoxAdventureMode.Name = "groupBoxAdventureMode";
             this.groupBoxAdventureMode.Size = new System.Drawing.Size(200, 108);
             this.groupBoxAdventureMode.TabIndex = 6;
@@ -339,7 +346,7 @@
             // chkBoxDoAdventures
             // 
             this.chkBoxDoAdventures.AutoSize = true;
-            this.chkBoxDoAdventures.Location = new System.Drawing.Point(74, 150);
+            this.chkBoxDoAdventures.Location = new System.Drawing.Point(74, 116);
             this.chkBoxDoAdventures.Name = "chkBoxDoAdventures";
             this.chkBoxDoAdventures.Size = new System.Drawing.Size(123, 21);
             this.chkBoxDoAdventures.TabIndex = 3;
@@ -369,7 +376,7 @@
             // 
             this.tabPageLog.Location = new System.Drawing.Point(4, 25);
             this.tabPageLog.Name = "tabPageLog";
-            this.tabPageLog.Size = new System.Drawing.Size(988, 304);
+            this.tabPageLog.Size = new System.Drawing.Size(988, 343);
             this.tabPageLog.TabIndex = 3;
             this.tabPageLog.Text = "Log";
             this.tabPageLog.UseVisualStyleBackColor = true;
@@ -391,13 +398,51 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1002, 511);
             this.tableLayoutPanel1.TabIndex = 16;
             // 
-            // TMAuto
+            // chkBoxPreferHard
+            // 
+            this.chkBoxPreferHard.AutoSize = true;
+            this.chkBoxPreferHard.Location = new System.Drawing.Point(74, 143);
+            this.chkBoxPreferHard.Name = "chkBoxPreferHard";
+            this.chkBoxPreferHard.Size = new System.Drawing.Size(102, 21);
+            this.chkBoxPreferHard.TabIndex = 10;
+            this.chkBoxPreferHard.Text = "Prefer hard";
+            this.chkBoxPreferHard.UseVisualStyleBackColor = true;
+            this.chkBoxPreferHard.CheckedChanged += new System.EventHandler(this.chkBoxPreferHard_CheckedChanged);
+            // 
+            // lblMaxTravelTime
+            // 
+            this.lblMaxTravelTime.AutoSize = true;
+            this.lblMaxTravelTime.Location = new System.Drawing.Point(43, 175);
+            this.lblMaxTravelTime.Name = "lblMaxTravelTime";
+            this.lblMaxTravelTime.Size = new System.Drawing.Size(110, 17);
+            this.lblMaxTravelTime.TabIndex = 12;
+            this.lblMaxTravelTime.Text = "Max. travel time:";
+            // 
+            // numericUpDownMaxTravelTime
+            // 
+            this.numericUpDownMaxTravelTime.Location = new System.Drawing.Point(160, 171);
+            this.numericUpDownMaxTravelTime.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownMaxTravelTime.Name = "numericUpDownMaxTravelTime";
+            this.numericUpDownMaxTravelTime.Size = new System.Drawing.Size(37, 22);
+            this.numericUpDownMaxTravelTime.TabIndex = 13;
+            this.numericUpDownMaxTravelTime.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownMaxTravelTime.ValueChanged += new System.EventHandler(this.numericUpDownMaxTravelTime_ValueChanged);
+            // 
+            // TravianBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1002, 511);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "TMAuto";
+            this.Name = "TravianBot";
             this.Text = "Travian Auto";
             this.tbCtrlMain.ResumeLayout(false);
             this.tabPageAccount.ResumeLayout(false);
@@ -410,6 +455,7 @@
             this.groupBoxAdventureMode.ResumeLayout(false);
             this.groupBoxAdventureMode.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTravelTime)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -445,6 +491,9 @@
         private System.Windows.Forms.NumericUpDown numericUpDownHard;
         private System.Windows.Forms.NumericUpDown numericUpDownNormal;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox chkBoxPreferHard;
+        private System.Windows.Forms.NumericUpDown numericUpDownMaxTravelTime;
+        private System.Windows.Forms.Label lblMaxTravelTime;
     }
 }
 

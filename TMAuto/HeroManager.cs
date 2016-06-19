@@ -38,22 +38,32 @@ namespace TMAuto
                 hero.Health = int.Parse(health);
                 hero.InVillage = int.Parse(node.SelectSingleNode("//img[contains(@class,'heroStatus')]").Attributes["class"].Value.Substring(10)) == 100;
 
-                //if hero should do adventures and has health
-                if (hero.AdventureMode != Mode.NONE && hero.InVillage && hero.CanNormal)
+                //if hero is in village and has enough health at least for normal ones
+                if (hero.InVillage && hero.CanNormal)
                 {
                     LogManager.log("checking hero adventures");
                     //choosing adventure
                     //if cant hard mode
-                    HtmlAgilityPack.HtmlNodeCollection adventureNodes;
+                    string xpath;
+                    string maxTravelTime = TimeSpan.FromHours(hero.MaxTravelTime).ToString("");
+
                     if (!hero.CanHard)
                     {
-                        adventureNodes = node.SelectNodes("//tr[@id and .//img[not(@class='adventureDifficulty0')]]");    
+                        xpath = "//tr[@id and .//img[not(@class='adventureDifficulty0')]]";
                     } else
                     {
-                        adventureNodes = node.SelectNodes("//tr[@id]");
+                        if (hero.PreferHard)
+                        {
+                            xpath = "//tr[@id and .//img[@class='adventureDifficulty0']]";
+                        }
+                        else
+                        {
+                            xpath = "//tr[@id]";
+                        }
                     }
 
-                    int count = adventureNodes.Count;
+                    var adventureNodes = node.SelectNodes(xpath).Where(n => n.SelectSingleNode("./td[@class='moveTime']").InnerText.Trim().CompareTo(maxTravelTime) <= 0);
+                    int count = adventureNodes.Count();
 
                     if (count > 0)
                     {
@@ -62,13 +72,16 @@ namespace TMAuto
                         switch (hero.AdventureMode)
                         {
                             case Mode.RANDOM:
-                                adventureIndex = new Random().Next(0, count - 1);
+                                adventureIndex = new Random().Next(0, count);
                                 break;
                             case Mode.FURTHEST:
                                 int newCount = 0;
 
-                                adventureIndex = r.GetDoc().DocumentNode.SelectNodes("//td[contains(@id,'walktime')]")
-                                .Select(n => { return new { Time = n.InnerText.Trim(), Index = newCount++ }; })
+                                adventureIndex = adventureNodes
+                                .Select(nn => {
+                                    var n = nn.SelectSingleNode("./td[@class='moveTime']");
+                                    return new { Time = n.InnerText.Trim(), Index = newCount++ };
+                                })
                                 .OrderByDescending(n => n.Time)
                                 .Select(n => n.Index)
                                 .First();
@@ -77,15 +90,17 @@ namespace TMAuto
                             default: //CLOSEST
                                 newCount = 0;
 
-                                adventureIndex = r.GetDoc().DocumentNode.SelectNodes("//td[contains(@id,'walktime')]")
-                                .Select(n => { return new { Time = n.InnerText.Trim(), Index = newCount++ }; })
-                                .OrderBy(n => n.Time)
+                                adventureIndex = adventureNodes
+                                .Select(nn => {
+                                    var n = nn.SelectSingleNode("./td[@class='moveTime']");
+                                    return new { Time = n.InnerText.Trim(), Index = newCount++ };
+                                }).OrderBy(n => n.Time)
                                 .Select(n => n.Index)
                                 .First();
 
                                 break;
                         }
-                        
+
                         task.addOperation((rr) =>
                         {
                             var sendNode = rr.GetDoc().DocumentNode.SelectSingleNode("//form[@class='adventureSendButton']").NextSibling.NextSibling;
@@ -102,7 +117,7 @@ namespace TMAuto
                             Task.sendPost("start_adventure.php", content);
                         });
                         
-                        string url = adventureNodes[adventureIndex].SelectSingleNode("td[@id]/a").Attributes["href"].Value;
+                        string url = adventureNodes.ElementAt(adventureIndex).SelectSingleNode("td[@id]/a").Attributes["href"].Value;
                         LogManager.log("Sending hero to adventure");
                         Task.sendGet(url);
                     }

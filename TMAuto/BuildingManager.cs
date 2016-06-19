@@ -102,14 +102,15 @@ namespace TMAuto
             task.addOperation((r) =>
             {
                 var ongoingBuildingQueue = Task.GetOngoingBuildingQueue(village, r);
-                bool freeQueue = ongoingBuildingQueue.Count == 0;
-
+                
                 for (int buildingIndex = 0; buildingIndex < b.Count; buildingIndex++)
                 {
                     QueuedBuilding queuedBuilding = b[buildingIndex];
                     Building building = village.Buildings[queuedBuilding.Id];
                     task.Name = "Build " + building.Name;
                     var buildingIndexForThisLoop = buildingIndex;
+
+                    bool freeQueue = ongoingBuildingQueue.Count == 0;
 
                     //if anything in queue
                     if (!freeQueue)

@@ -268,5 +268,15 @@ namespace TMAuto
         {
             Invoke(new Action(() => listChanged(sender, e)));
         }
+
+        private void chkBoxPreferHard_CheckedChanged(object sender, EventArgs e)
+        {
+            hero.PreferHard = chkBoxPreferHard.Checked;
+        }
+
+        private void numericUpDownMaxTravelTime_ValueChanged(object sender, EventArgs e)
+        {
+            hero.MaxTravelTime = (int)numericUpDownMaxTravelTime.Value;
+        }
     }      
 }

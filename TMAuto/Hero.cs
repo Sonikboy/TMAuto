@@ -17,13 +17,16 @@ namespace TMAuto
         public int HealthHardAdventures { get; set; }
         public bool CanNormal { get { return Health >= HealthNormalAdventures; } }
         public bool CanHard { get { return Health >= HealthHardAdventures; } }
+        public bool PreferHard { get; set; }
         public bool InVillage { get; set; }
+        public int MaxTravelTime { get; set; }
 
         public Mode AdventureMode { get; set; }
 
         private Hero() {
             HealthNormalAdventures = 30;
             HealthHardAdventures = 50;
+            MaxTravelTime = 1;
             AdventureMode = Mode.NONE;
         }
     }

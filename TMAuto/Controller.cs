@@ -15,6 +15,7 @@ namespace TMAuto
         private HttpClient httpclient = HttpClient.Instance;
         private Queue<Task> tasks;
         private Task currentTask;
+        private Hero hero = Hero.Instance;
 
         private int action = 1;
         private string result;
@@ -71,7 +72,6 @@ namespace TMAuto
             tasks.Enqueue(LoginManager.GetLoginTask());
             tasks.Enqueue(villageManager.GetInitializeVillagesTask());
             tasks.Enqueue(buildingManager.GetCheckBuildingsTask());
-            tasks.Enqueue(heroManager.GetCheckHeroTask());
         }
 
         private void buildingManager_BuildingTimerElapsed()
@@ -85,7 +85,9 @@ namespace TMAuto
                 }
             }
 
-            if (tasks.Count != 0 && currentTask == null)
+            if (hero.AdventureMode != Mode.NONE) tasks.Enqueue(heroManager.GetCheckHeroTask());
+
+            if (currentTask == null)
             {
                 currentTask = tasks.Dequeue();
                 currentTask.ExecuteNextOperation("");

@@ -103,7 +103,16 @@ namespace TMAuto
 
                         task.addOperation((rr) =>
                         {
-                            var sendNode = rr.GetDoc().DocumentNode.SelectSingleNode("//form[@class='adventureSendButton']").NextSibling.NextSibling;
+                            var button = rr.GetDoc().DocumentNode.SelectSingleNode("//form[@class='adventureSendButton']");
+
+                            //cant send. no rally points, cant do yet etc
+                            if (button == null)
+                            {
+                                processResult();
+                                return;
+                            }
+
+                            var sendNode = button.NextSibling.NextSibling;
 
                             NameValueCollection content = new NameValueCollection();
 
@@ -114,11 +123,11 @@ namespace TMAuto
                             var sendButtonNode = sendNode.SelectSingleNode("button");
                             content.Add(sendButtonNode.Attributes["name"].Value, sendButtonNode.Attributes["value"].Value);
 
+                            LogManager.log("Sending hero to adventure");
                             Task.sendPost("start_adventure.php", content);
                         });
                         
                         string url = adventureNodes.ElementAt(adventureIndex).SelectSingleNode("td[@id]/a").Attributes["href"].Value;
-                        LogManager.log("Sending hero to adventure");
                         Task.sendGet(url);
                     }
                     else

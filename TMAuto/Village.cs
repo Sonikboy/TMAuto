@@ -53,11 +53,6 @@ namespace TMAuto
             }
         }
 
-        public override string ToString()
-        {
-            return Name + "(" + X + "|" + Y + ")";
-        }
-
         public void addFarm(Farm farm)
         {
             if (!Farms.ContainsKey(farm))
@@ -94,6 +89,11 @@ namespace TMAuto
                     building.Type = b.Type;
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0} ({1}|{2})", Name, X, Y);
         }
     }
 }

@@ -38,13 +38,16 @@
             this.rTxtBoxLog = new System.Windows.Forms.RichTextBox();
             this.tbCtrlMain = new System.Windows.Forms.TabControl();
             this.tabPageAccount = new System.Windows.Forms.TabPage();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.chkBoxSaveResponse = new System.Windows.Forms.CheckBox();
             this.txtBoxServer = new System.Windows.Forms.TextBox();
             this.tagPageBuildings = new System.Windows.Forms.TabPage();
             this.tbCtrlBuildings = new System.Windows.Forms.TabControl();
             this.tabPageTroops = new System.Windows.Forms.TabPage();
             this.tabPageFarms = new System.Windows.Forms.TabPage();
             this.tabPageHero = new System.Windows.Forms.TabPage();
+            this.numericUpDownMaxTravelTime = new System.Windows.Forms.NumericUpDown();
+            this.lblMaxTravelTime = new System.Windows.Forms.Label();
+            this.chkBoxPreferHard = new System.Windows.Forms.CheckBox();
             this.numericUpDownHard = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownNormal = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
@@ -57,18 +60,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageLog = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.chkBoxPreferHard = new System.Windows.Forms.CheckBox();
-            this.lblMaxTravelTime = new System.Windows.Forms.Label();
-            this.numericUpDownMaxTravelTime = new System.Windows.Forms.NumericUpDown();
             this.tbCtrlMain.SuspendLayout();
             this.tabPageAccount.SuspendLayout();
             this.tagPageBuildings.SuspendLayout();
             this.tabPageHero.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTravelTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHard)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormal)).BeginInit();
             this.groupBoxAdventureMode.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTravelTime)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -138,32 +138,30 @@
             // rTxtBoxLog
             // 
             this.rTxtBoxLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rTxtBoxLog.Location = new System.Drawing.Point(3, 381);
+            this.rTxtBoxLog.Location = new System.Drawing.Point(3, 422);
             this.rTxtBoxLog.Name = "rTxtBoxLog";
-            this.rTxtBoxLog.Size = new System.Drawing.Size(996, 106);
+            this.rTxtBoxLog.Size = new System.Drawing.Size(1036, 119);
             this.rTxtBoxLog.TabIndex = 15;
             this.rTxtBoxLog.Text = "";
             // 
             // tbCtrlMain
             // 
-            this.tbCtrlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbCtrlMain.Controls.Add(this.tabPageAccount);
             this.tbCtrlMain.Controls.Add(this.tagPageBuildings);
             this.tbCtrlMain.Controls.Add(this.tabPageTroops);
             this.tbCtrlMain.Controls.Add(this.tabPageFarms);
             this.tbCtrlMain.Controls.Add(this.tabPageHero);
             this.tbCtrlMain.Controls.Add(this.tabPageLog);
+            this.tbCtrlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbCtrlMain.Location = new System.Drawing.Point(3, 3);
             this.tbCtrlMain.Name = "tbCtrlMain";
             this.tbCtrlMain.SelectedIndex = 0;
-            this.tbCtrlMain.Size = new System.Drawing.Size(996, 372);
+            this.tbCtrlMain.Size = new System.Drawing.Size(1036, 413);
             this.tbCtrlMain.TabIndex = 14;
             // 
             // tabPageAccount
             // 
-            this.tabPageAccount.Controls.Add(this.checkBox2);
+            this.tabPageAccount.Controls.Add(this.chkBoxSaveResponse);
             this.tabPageAccount.Controls.Add(this.txtBoxServer);
             this.tabPageAccount.Controls.Add(this.checkBox1);
             this.tabPageAccount.Controls.Add(this.label1);
@@ -174,22 +172,22 @@
             this.tabPageAccount.Controls.Add(this.txtBoxPassword);
             this.tabPageAccount.Location = new System.Drawing.Point(4, 25);
             this.tabPageAccount.Name = "tabPageAccount";
-            this.tabPageAccount.Size = new System.Drawing.Size(988, 343);
+            this.tabPageAccount.Size = new System.Drawing.Size(1028, 384);
             this.tabPageAccount.TabIndex = 2;
             this.tabPageAccount.Text = "Account";
             this.tabPageAccount.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // chkBoxSaveResponse
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(268, 69);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(151, 21);
-            this.checkBox2.TabIndex = 13;
-            this.checkBox2.Text = "save http response";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.chkBoxSaveResponse.AutoSize = true;
+            this.chkBoxSaveResponse.Checked = true;
+            this.chkBoxSaveResponse.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBoxSaveResponse.Location = new System.Drawing.Point(268, 69);
+            this.chkBoxSaveResponse.Name = "chkBoxSaveResponse";
+            this.chkBoxSaveResponse.Size = new System.Drawing.Size(151, 21);
+            this.chkBoxSaveResponse.TabIndex = 13;
+            this.chkBoxSaveResponse.Text = "save http response";
+            this.chkBoxSaveResponse.UseVisualStyleBackColor = true;
             // 
             // txtBoxServer
             // 
@@ -203,7 +201,7 @@
             this.tagPageBuildings.Controls.Add(this.tbCtrlBuildings);
             this.tagPageBuildings.Location = new System.Drawing.Point(4, 25);
             this.tagPageBuildings.Name = "tagPageBuildings";
-            this.tagPageBuildings.Size = new System.Drawing.Size(988, 343);
+            this.tagPageBuildings.Size = new System.Drawing.Size(1028, 384);
             this.tagPageBuildings.TabIndex = 0;
             this.tagPageBuildings.Text = "Buildings";
             this.tagPageBuildings.UseVisualStyleBackColor = true;
@@ -214,14 +212,14 @@
             this.tbCtrlBuildings.Location = new System.Drawing.Point(0, 0);
             this.tbCtrlBuildings.Name = "tbCtrlBuildings";
             this.tbCtrlBuildings.SelectedIndex = 0;
-            this.tbCtrlBuildings.Size = new System.Drawing.Size(988, 343);
+            this.tbCtrlBuildings.Size = new System.Drawing.Size(1028, 384);
             this.tbCtrlBuildings.TabIndex = 0;
             // 
             // tabPageTroops
             // 
             this.tabPageTroops.Location = new System.Drawing.Point(4, 25);
             this.tabPageTroops.Name = "tabPageTroops";
-            this.tabPageTroops.Size = new System.Drawing.Size(988, 343);
+            this.tabPageTroops.Size = new System.Drawing.Size(1028, 384);
             this.tabPageTroops.TabIndex = 4;
             this.tabPageTroops.Text = "Troops";
             this.tabPageTroops.UseVisualStyleBackColor = true;
@@ -230,7 +228,7 @@
             // 
             this.tabPageFarms.Location = new System.Drawing.Point(4, 25);
             this.tabPageFarms.Name = "tabPageFarms";
-            this.tabPageFarms.Size = new System.Drawing.Size(988, 343);
+            this.tabPageFarms.Size = new System.Drawing.Size(1028, 384);
             this.tabPageFarms.TabIndex = 6;
             this.tabPageFarms.Text = "Farms";
             this.tabPageFarms.UseVisualStyleBackColor = true;
@@ -249,10 +247,48 @@
             this.tabPageHero.Controls.Add(this.label3);
             this.tabPageHero.Location = new System.Drawing.Point(4, 25);
             this.tabPageHero.Name = "tabPageHero";
-            this.tabPageHero.Size = new System.Drawing.Size(988, 343);
+            this.tabPageHero.Size = new System.Drawing.Size(1028, 384);
             this.tabPageHero.TabIndex = 5;
             this.tabPageHero.Text = "Hero";
             this.tabPageHero.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDownMaxTravelTime
+            // 
+            this.numericUpDownMaxTravelTime.Location = new System.Drawing.Point(160, 171);
+            this.numericUpDownMaxTravelTime.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownMaxTravelTime.Name = "numericUpDownMaxTravelTime";
+            this.numericUpDownMaxTravelTime.Size = new System.Drawing.Size(37, 22);
+            this.numericUpDownMaxTravelTime.TabIndex = 13;
+            this.numericUpDownMaxTravelTime.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownMaxTravelTime.ValueChanged += new System.EventHandler(this.numericUpDownMaxTravelTime_ValueChanged);
+            // 
+            // lblMaxTravelTime
+            // 
+            this.lblMaxTravelTime.AutoSize = true;
+            this.lblMaxTravelTime.Location = new System.Drawing.Point(43, 175);
+            this.lblMaxTravelTime.Name = "lblMaxTravelTime";
+            this.lblMaxTravelTime.Size = new System.Drawing.Size(110, 17);
+            this.lblMaxTravelTime.TabIndex = 12;
+            this.lblMaxTravelTime.Text = "Max. travel time:";
+            // 
+            // chkBoxPreferHard
+            // 
+            this.chkBoxPreferHard.AutoSize = true;
+            this.chkBoxPreferHard.Location = new System.Drawing.Point(74, 143);
+            this.chkBoxPreferHard.Name = "chkBoxPreferHard";
+            this.chkBoxPreferHard.Size = new System.Drawing.Size(102, 21);
+            this.chkBoxPreferHard.TabIndex = 10;
+            this.chkBoxPreferHard.Text = "Prefer hard";
+            this.chkBoxPreferHard.UseVisualStyleBackColor = true;
+            this.chkBoxPreferHard.CheckedChanged += new System.EventHandler(this.chkBoxPreferHard_CheckedChanged);
             // 
             // numericUpDownHard
             // 
@@ -376,7 +412,7 @@
             // 
             this.tabPageLog.Location = new System.Drawing.Point(4, 25);
             this.tabPageLog.Name = "tabPageLog";
-            this.tabPageLog.Size = new System.Drawing.Size(988, 343);
+            this.tabPageLog.Size = new System.Drawing.Size(1028, 384);
             this.tabPageLog.TabIndex = 3;
             this.tabPageLog.Text = "Log";
             this.tabPageLog.UseVisualStyleBackColor = true;
@@ -395,52 +431,14 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 77F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1002, 511);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1042, 565);
             this.tableLayoutPanel1.TabIndex = 16;
-            // 
-            // chkBoxPreferHard
-            // 
-            this.chkBoxPreferHard.AutoSize = true;
-            this.chkBoxPreferHard.Location = new System.Drawing.Point(74, 143);
-            this.chkBoxPreferHard.Name = "chkBoxPreferHard";
-            this.chkBoxPreferHard.Size = new System.Drawing.Size(102, 21);
-            this.chkBoxPreferHard.TabIndex = 10;
-            this.chkBoxPreferHard.Text = "Prefer hard";
-            this.chkBoxPreferHard.UseVisualStyleBackColor = true;
-            this.chkBoxPreferHard.CheckedChanged += new System.EventHandler(this.chkBoxPreferHard_CheckedChanged);
-            // 
-            // lblMaxTravelTime
-            // 
-            this.lblMaxTravelTime.AutoSize = true;
-            this.lblMaxTravelTime.Location = new System.Drawing.Point(43, 175);
-            this.lblMaxTravelTime.Name = "lblMaxTravelTime";
-            this.lblMaxTravelTime.Size = new System.Drawing.Size(110, 17);
-            this.lblMaxTravelTime.TabIndex = 12;
-            this.lblMaxTravelTime.Text = "Max. travel time:";
-            // 
-            // numericUpDownMaxTravelTime
-            // 
-            this.numericUpDownMaxTravelTime.Location = new System.Drawing.Point(160, 171);
-            this.numericUpDownMaxTravelTime.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownMaxTravelTime.Name = "numericUpDownMaxTravelTime";
-            this.numericUpDownMaxTravelTime.Size = new System.Drawing.Size(37, 22);
-            this.numericUpDownMaxTravelTime.TabIndex = 13;
-            this.numericUpDownMaxTravelTime.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownMaxTravelTime.ValueChanged += new System.EventHandler(this.numericUpDownMaxTravelTime_ValueChanged);
             // 
             // TravianBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 511);
+            this.ClientSize = new System.Drawing.Size(1042, 565);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "TravianBot";
             this.Text = "Travian Auto";
@@ -450,12 +448,12 @@
             this.tagPageBuildings.ResumeLayout(false);
             this.tabPageHero.ResumeLayout(false);
             this.tabPageHero.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTravelTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHard)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormal)).EndInit();
             this.groupBoxAdventureMode.ResumeLayout(false);
             this.groupBoxAdventureMode.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTravelTime)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -480,7 +478,7 @@
         private System.Windows.Forms.TabPage tabPageHero;
         private System.Windows.Forms.TabPage tabPageLog;
         private System.Windows.Forms.TextBox txtBoxServer;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox chkBoxSaveResponse;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RadioButton rdBtnRandom;

@@ -13,6 +13,8 @@ namespace TMAuto
         private int i;
         private List<Action<string>> operations;
         private static HttpClient httpClient = HttpClient.Instance;
+        public static HttpClient HttpClient { get { return httpClient; } }
+
         public string Name { get; set; }
        
         public Task()
@@ -66,19 +68,16 @@ namespace TMAuto
             return "http://" + Settings.Instance.Server + "/" + path;
         }
 
-        public static void SwitchVillage(string id)
+        public static void SwitchVillage(Village village)
         {
-            sendGet("dorf1.php?newdid=" + id + "&");
+            LogManager.log("Switching to " + village);
+            sendGet("dorf1.php?newdid=" + village.Id + "&");
         }
 
-        public static byte[] send(string url, NameValueCollection content)
-        {
-            return httpClient.UploadValues(new Uri(url), content);
-        }
         //returns queue
         public static OngoingQueueList GetOngoingBuildingQueue(Village village, string result)
         {
-            LogManager.log("Analyzing building queue");
+            LogManager.log(village, "Analyzing building queue");
 
             var docNode = result.GetDoc().DocumentNode;
             var queueNodes = docNode.SelectNodes("//li[.//img[@class='del' and @title]]");

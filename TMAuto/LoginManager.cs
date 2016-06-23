@@ -18,17 +18,13 @@ namespace TMAuto
             login.addOperation((r) =>
             {
                 LogManager.log("Opening login page.");
-
-                string url = "dorf1.php";
-
-                Task.sendGet(url);
+                Task.sendGet("dorf1.php");
             });
             //continue login choose server
             login.addOperation((r) =>
             {
                 LogManager.log("Sending login information.");
 
-                string url = "dorf1.php";
                 string loginText = r.GetDoc().DocumentNode.SelectSingleNode("//button[@name='s1']").Attributes["value"].Value;
 
                 NameValueCollection content = new NameValueCollection();
@@ -38,17 +34,10 @@ namespace TMAuto
                 content.Add("w", "1920:1080");
                 content.Add("login", ((int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).ToString());
 
-                Task.sendPost(url, content);
+                Task.sendPost("dorf1.php", content);
             });
 
             return login;
-        }
-
-        private HtmlAgilityPack.HtmlDocument getDoc(string result)
-        {
-            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(result);
-            return doc;
         }
     }
 }

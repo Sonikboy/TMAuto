@@ -81,7 +81,7 @@ namespace TMAuto
 
         //cost of next level
         public Resources NextLevelCost { get { return Buildings.getNextLevelCost(Type, Level); } }
-        public string NextLevelBuildingTime { get { return Buildings.NextLevelBuildingTime(Type, Level); } }
+        public TimeSpan NextLevelBuildingTime { get { return Buildings.NextLevelBuildingTime(Type, Level); } }
 
         public Image BuildingImage { get { return Buildings.GetImage(Type); } }
 

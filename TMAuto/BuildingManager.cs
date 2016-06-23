@@ -11,7 +11,6 @@ namespace TMAuto
 {
     class BuildingManager
     {
-        private HttpClient httpClient;
         private Timer timer;
         private Action processResult;
         private Player player = Player.Instance;
@@ -26,7 +25,6 @@ namespace TMAuto
         public BuildingManager(Action processResult)
         {
             this.processResult = processResult;
-            httpClient = HttpClient.Instance;
             timer = new Timer(1000 * 30);
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
         }
@@ -39,7 +37,7 @@ namespace TMAuto
         {
             PriorityQueue queue = village.BuildingQueue;
 
-            var b = new QueuedBuilding() { Name = Buildings.GetName(village.Buildings[id].Type), Id = id };
+            var b = new QueuedBuilding() { Name = Buildings.GetName(village.Buildings[id].Type), Id = id, Type = village.Buildings[id].Type };
             queue.Enqueue(priority, b);
             var building = village.Buildings[id];
             building.Offset = GetOffset(village, id);
@@ -92,11 +90,10 @@ namespace TMAuto
                 QueuedBuilding build = queue.Peek();
                 b.Add(build);
             }
-
+            
             task.addOperation((r) =>
             {
-                LogManager.log("Switching to village " + village);
-                Task.SwitchVillage(village.Id);
+                Task.SwitchVillage(village);
             });
 
             task.addOperation((r) =>
@@ -129,8 +126,24 @@ namespace TMAuto
                         {
                             task.addOperation((rrr) =>
                             {
-                                LogManager.log("Checking resources");
-                                Task.sendGet("build.php?id=" + (queuedBuilding.Id + 1));
+                                var nextLevelCost = Buildings.getNextLevelCost(queuedBuilding.Type, queuedBuilding.Level);
+
+                                var rm = Regex.Match(rrr, "resources.storage = {.*?\"l1\": (\\d+).*?,\"l2\": (\\d+).*?,\"l3\": (\\d+).*?,\"l4\": (\\d+).*?};", RegexOptions.Singleline);
+                                var freeCrop = int.Parse(Regex.Match(rrr, ",\"l5\":.*?(\\d+).*?};").Groups[1].Value);
+                                var currentResources = new Resources() { Wood = int.Parse(rm.Groups[1].Value), Clay = int.Parse(rm.Groups[2].Value), Iron = int.Parse(rm.Groups[3].Value), Crop = int.Parse(rm.Groups[4].Value), FreeCrop = freeCrop };
+
+                                if (currentResources >= nextLevelCost)
+                                {
+                                    Task.sendGet("build.php?id=" + (queuedBuilding.Id + 1));
+                                } else
+                                {
+                                    /**
+                                    *
+                                    * Build croplands?? [POSSIBLE_EDIT]
+                                    *
+                                    */
+                                    LogManager.log(village, "Not enough resources to build " + building.Name);
+                                }
                             });
 
                             Action<string> actionBuildNew = (rrr) =>
@@ -139,7 +152,7 @@ namespace TMAuto
 
                                 if (node != null)
                                 {
-                                    LogManager.log("Building " + building.Name);
+                                    LogManager.log(village, "Building new " + building.Name);
                                     string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
                                     var bb = queue.Remove(queuedBuilding);
                                     building.Offset = bb.Offset;
@@ -147,7 +160,7 @@ namespace TMAuto
                                 }
                                 else
                                 {
-                                    LogManager.log("Not enough resources for " + building.Name);
+                                    LogManager.log(village, "Cant build " + building.Name);
                                     processResult();
                                 }
                             };
@@ -156,7 +169,6 @@ namespace TMAuto
                             {
                                 if (building.Type > 4 && building.Level == 0) //building new, not for res
                                 {
-                                    LogManager.log("Building new " + building.Name);
                                     string category;
 
                                     switch (building.Type)
@@ -207,13 +219,12 @@ namespace TMAuto
                                     }
                                 }
                                 else //upgrading building
-                                {
-                                    LogManager.log("Upgrading " + building.Name);
+                                {         
                                     var node = rrr.GetDoc().DocumentNode.SelectSingleNode("//button[@class='green build']");
                                     //can build, green button
                                     if (node != null)
                                     {
-                                        LogManager.log("Building " + building.Name);
+                                        LogManager.log(village, "Upgrading " + building.Name + " to " + queuedBuilding.Level);
                                         string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
                                         var bb = queue.Remove(queuedBuilding);
                                         building.Offset = bb.Offset;
@@ -221,7 +232,7 @@ namespace TMAuto
                                     }
                                     else
                                     {
-                                        LogManager.log("Not enough resources to build " + building.Name);
+                                        LogManager.log(village, "Cant build " + building.Name);
                                         processResult();
                                     }
                                 }
@@ -244,8 +255,8 @@ namespace TMAuto
 
             task.addOperation((r) =>
             {
-                LogManager.log("Checking resources in village " + village);
-                Task.SwitchVillage(village.Id);
+                LogManager.log(village, "Checking resources");
+                Task.SwitchVillage(village);
             });
 
             var buildings = village.Buildings;
@@ -270,7 +281,7 @@ namespace TMAuto
                     building.Level = int.Parse(match.Groups[2].Value);
                 }
 
-                LogManager.log("Checking buildings in village " + village);
+                LogManager.log(village, "Checking buildings");
                 Task.sendGet("dorf2.php");
             });
 

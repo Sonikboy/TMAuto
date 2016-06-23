@@ -81,8 +81,9 @@ namespace TMAuto
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            Buildings.Init();
             saveSettings();
-            controller.saveResponses = checkBox2.Checked;
+            controller.saveResponses = chkBoxSaveResponse.Checked;
             controller.Start();
         }
 

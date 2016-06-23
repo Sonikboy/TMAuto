@@ -12,7 +12,6 @@ namespace TMAuto
 {
     class Controller
     {
-        private HttpClient httpclient = HttpClient.Instance;
         private Queue<Task> tasks;
         private Task currentTask;
         private Hero hero = Hero.Instance;
@@ -21,7 +20,6 @@ namespace TMAuto
         private string result;
 
         private Player player = Player.Instance;
-        private Village currentVillage;
 
         private BuildingManager buildingManager;
         private VillageManager villageManager;
@@ -40,8 +38,8 @@ namespace TMAuto
 
         private void initHandlers()
         {
-            httpclient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(httpclient_DownloadStringCompleted);
-            httpclient.UploadValuesCompleted += new UploadValuesCompletedEventHandler(htptClient_UploadValuesCompleted);
+            Task.HttpClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(httpclient_DownloadStringCompleted);
+            Task.HttpClient.UploadValuesCompleted += new UploadValuesCompletedEventHandler(htptClient_UploadValuesCompleted);
 
             buildingManager.BuildingTimerElapsed += new BuildingManager.BuildingTimerHandler(buildingManager_BuildingTimerElapsed);
         }
@@ -103,13 +101,9 @@ namespace TMAuto
         {
             buildingManager.RemoveBuilding(village, index);
         }
-        private void log(string message)
-        {
-            LogManager.log(message);
-        }
 
         private void ProcessResult()
-        { 
+        {
             if (currentTask.IsDone())
             {
                 if (tasks.Count > 0)
@@ -119,8 +113,7 @@ namespace TMAuto
                 } else
                 {
                     currentTask = null;
-                    currentVillage = player.Villages[0];
-                    log("Done.");
+                    LogManager.log("Done.");
                     return;
                 }
             }

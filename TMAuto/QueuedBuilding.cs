@@ -13,5 +13,7 @@ namespace TMAuto
         public int Level { get; set; }
         public string Text { get { return Name + " level " + Level; } }
         public string Time { get { return "00"; } }
+
+        public int Type { get; set; }
     }
 }

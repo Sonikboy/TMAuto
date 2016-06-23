@@ -24,7 +24,7 @@ namespace TMAuto
             {
                 HttpWebRequest rq = (request as HttpWebRequest);
                 rq.CookieContainer = container;
-                rq.KeepAlive = false;
+                rq.KeepAlive = true;
                 rq.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36";
             }
 

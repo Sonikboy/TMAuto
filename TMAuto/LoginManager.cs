@@ -19,6 +19,7 @@ namespace TMAuto
             {
                 LogManager.log("Opening login page.");
                 Task.sendGet("dorf1.php");
+                System.Windows.Forms.MessageBox.Show("ss");
             });
             //continue login choose server
             login.addOperation((r) =>

@@ -24,6 +24,7 @@ namespace TMAuto
         private BuildingManager buildingManager;
         private VillageManager villageManager;
         private HeroManager heroManager;
+        private UnitManager unitManager;
 
         public bool saveResponses;
         public Controller()
@@ -31,7 +32,8 @@ namespace TMAuto
             buildingManager = new BuildingManager(ProcessResult);
             villageManager = new VillageManager(ProcessResult);
             heroManager = new HeroManager(ProcessResult);
-            
+            unitManager = new UnitManager(ProcessResult);
+
             initHandlers();
             initTasks();
         }
@@ -69,21 +71,21 @@ namespace TMAuto
             tasks = new Queue<Task>();
             tasks.Enqueue(LoginManager.GetLoginTask());
             tasks.Enqueue(villageManager.GetInitializeVillagesTask());
-            tasks.Enqueue(buildingManager.GetCheckBuildingsTask());
+            tasks.Enqueue(buildingManager.GetCheckBuildingsTask());  
         }
 
         private void buildingManager_BuildingTimerElapsed()
         {
             for (int i = 0; i < player.Villages.Count; i++)
             {
-                var nextTask = buildingManager.GetBuildingTask(player.Villages[i]);
+                var nextTask = buildingManager.GetBuildingTaskForVillage(player.Villages[i]);
 
                 if (nextTask != null) {
                     tasks.Enqueue(nextTask);
                 }
             }
 
-            if (hero.AdventureMode != Mode.NONE) tasks.Enqueue(heroManager.GetCheckHeroTask());
+            if (heroManager.DoAdventure) tasks.Enqueue(heroManager.GetCheckHeroTask());
 
             if (tasks.Count > 0 && currentTask == null)
             {

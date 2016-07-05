@@ -16,12 +16,12 @@ namespace TMAuto
         public PickNewBuilding(int id, int[] builtTypes)
         {
             InitializeComponent();
-            int tribe = Player.Instance.Tribe;
+            Tribe tribe = Player.Instance.Tribe;
 
             //place to build wall
             if (id == 40)
             {
-                listBox1.Items.Add(Buildings.GetName(Player.Instance.Tribe + 30));
+                listBox1.Items.Add(Buildings.GetName((int)Player.Instance.Tribe + 30));
                 listBox1.SelectedIndex = 0;
                 return;
             }
@@ -37,7 +37,7 @@ namespace TMAuto
             {
                 //nonexisting building, wonder, wall, rally point skip. those have methods above for their place
                 //tribe specific buildings
-                if ((builtTypes.Contains(i) && i != 10 && i!= 11 && i != 23)|| i == 12 || i == 16 || i == 31 || i == 32 || i == 33 || (i == 35 && tribe != 2) || (i == 36 && tribe != 3) || i == 40 || (i == 41 && tribe != 1) )
+                if ((builtTypes.Contains(i) && i != 10 && i!= 11 && i != 23)|| i == 12 || i == 16 || i == 31 || i == 32 || i == 33 || (i == 35 && tribe != Tribe.Teutons) || (i == 36 && tribe != Tribe.Gauls) || i == 40 || (i == 41 && tribe != Tribe.Romans) )
                 {
                     continue;
                 }

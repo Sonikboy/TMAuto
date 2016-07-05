@@ -45,7 +45,7 @@ namespace TMAuto
                 resources1.Clay >= resources2.Clay &&
                 resources1.Iron >= resources1.Iron &&
                 resources1.Crop >= resources2.Crop &&
-                resources1.FreeCrop >= resources2.FreeCrop;
+                (resources2.FreeCrop == 0 || resources1.FreeCrop >= resources2.FreeCrop);
         }
 
         public static bool operator <=(Resources resources1, Resources resources2)

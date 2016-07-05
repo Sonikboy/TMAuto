@@ -10,6 +10,7 @@ namespace TMAuto
 {
     class Building : INotifyPropertyChanged
     {
+        public int IngameId { get; set; }
         public string Name { get { return Buildings.GetName(Type); } }
         private int type;
         public int Type {
@@ -37,7 +38,15 @@ namespace TMAuto
                 if (level != value)
                 {
                     level = value;
-                    notifyPropertyChanged();
+
+                    if (Total == 0)
+                    {
+                        Type = 0;
+                    }
+                    else
+                    {
+                        notifyPropertyChanged();
+                    }
                 }
             }
         }
@@ -52,7 +61,15 @@ namespace TMAuto
                 if (onGoing != value)
                 {
                     onGoing = value;
-                    notifyPropertyChanged();
+
+                    if (Total == 0)
+                    {
+                        Type = 0;
+                    }
+                    else
+                    {
+                        notifyPropertyChanged();
+                    }
                 }
             }
         }
@@ -65,7 +82,14 @@ namespace TMAuto
                 if (offset != value)
                 {
                     offset = value;
-                    notifyPropertyChanged();
+
+                    if (Total == 0)
+                    {
+                        Type = 0;
+                    } else
+                    {
+                        notifyPropertyChanged();
+                    }    
                 }
             }
         }
@@ -74,14 +98,20 @@ namespace TMAuto
         {
             get
             {
-                return level + (Total > level ? "|" + Total : "");
+                if (Total > 0)
+                {
+                    return level + (Total > level ? "|" + Total : "");
+                } else
+                {
+                    return IngameId + "";
+                }
             }
         }
         public int MaxLevel { get { return Buildings.getMaxLevel(Type); } }
 
         //cost of next level
         public Resources NextLevelCost { get { return Buildings.getNextLevelCost(Type, Level); } }
-        public TimeSpan NextLevelBuildingTime { get { return Buildings.NextLevelBuildingTime(Type, Level); } }
+        public TimeSpan NextLevelBuildingTime { get { return Buildings.NextLevelBuildingTime(Type, Level, 1); } }
 
         public Image BuildingImage { get { return Buildings.GetImage(Type); } }
 

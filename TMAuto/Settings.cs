@@ -17,12 +17,14 @@ namespace TMAuto
         public string Username { get; set; }
         public string Password { get; set; }
         public string Server { get; set; }
+        public int Speed { get; set; }
 
         private Settings()
         {
             Username = "";
             Password = "";
             Server = "";
+            Speed = 3;
         }
 
         private void loadLastSettings()

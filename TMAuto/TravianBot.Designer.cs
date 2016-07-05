@@ -42,8 +42,7 @@
             this.txtBoxServer = new System.Windows.Forms.TextBox();
             this.tagPageBuildings = new System.Windows.Forms.TabPage();
             this.tbCtrlBuildings = new System.Windows.Forms.TabControl();
-            this.tabPageTroops = new System.Windows.Forms.TabPage();
-            this.tabPageFarms = new System.Windows.Forms.TabPage();
+            this.tabPageUnits = new System.Windows.Forms.TabPage();
             this.tabPageHero = new System.Windows.Forms.TabPage();
             this.numericUpDownMaxTravelTime = new System.Windows.Forms.NumericUpDown();
             this.lblMaxTravelTime = new System.Windows.Forms.Label();
@@ -148,8 +147,7 @@
             // 
             this.tbCtrlMain.Controls.Add(this.tabPageAccount);
             this.tbCtrlMain.Controls.Add(this.tagPageBuildings);
-            this.tbCtrlMain.Controls.Add(this.tabPageTroops);
-            this.tbCtrlMain.Controls.Add(this.tabPageFarms);
+            this.tbCtrlMain.Controls.Add(this.tabPageUnits);
             this.tbCtrlMain.Controls.Add(this.tabPageHero);
             this.tbCtrlMain.Controls.Add(this.tabPageLog);
             this.tbCtrlMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -215,23 +213,14 @@
             this.tbCtrlBuildings.Size = new System.Drawing.Size(1028, 384);
             this.tbCtrlBuildings.TabIndex = 0;
             // 
-            // tabPageTroops
+            // tabPageUnits
             // 
-            this.tabPageTroops.Location = new System.Drawing.Point(4, 25);
-            this.tabPageTroops.Name = "tabPageTroops";
-            this.tabPageTroops.Size = new System.Drawing.Size(1028, 384);
-            this.tabPageTroops.TabIndex = 4;
-            this.tabPageTroops.Text = "Troops";
-            this.tabPageTroops.UseVisualStyleBackColor = true;
-            // 
-            // tabPageFarms
-            // 
-            this.tabPageFarms.Location = new System.Drawing.Point(4, 25);
-            this.tabPageFarms.Name = "tabPageFarms";
-            this.tabPageFarms.Size = new System.Drawing.Size(1028, 384);
-            this.tabPageFarms.TabIndex = 6;
-            this.tabPageFarms.Text = "Farms";
-            this.tabPageFarms.UseVisualStyleBackColor = true;
+            this.tabPageUnits.Location = new System.Drawing.Point(4, 25);
+            this.tabPageUnits.Name = "tabPageUnits";
+            this.tabPageUnits.Size = new System.Drawing.Size(1028, 384);
+            this.tabPageUnits.TabIndex = 4;
+            this.tabPageUnits.Text = "Units";
+            this.tabPageUnits.UseVisualStyleBackColor = true;
             // 
             // tabPageHero
             // 
@@ -473,8 +462,7 @@
         private System.Windows.Forms.TabPage tagPageBuildings;
         private System.Windows.Forms.TabControl tbCtrlBuildings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TabPage tabPageTroops;
-        private System.Windows.Forms.TabPage tabPageFarms;
+        private System.Windows.Forms.TabPage tabPageUnits;
         private System.Windows.Forms.TabPage tabPageHero;
         private System.Windows.Forms.TabPage tabPageLog;
         private System.Windows.Forms.TextBox txtBoxServer;

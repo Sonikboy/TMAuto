@@ -11,7 +11,7 @@ namespace TMAuto
 {
     class BuildingManager
     {
-        private Timer timer;
+        private CustomTimer timer;
         private Action processResult;
         private Player player = Player.Instance;
 
@@ -25,7 +25,7 @@ namespace TMAuto
         public BuildingManager(Action processResult)
         {
             this.processResult = processResult;
-            timer = new Timer(1000 * 30);
+            timer = new CustomTimer(60, 90);
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
         }
 
@@ -58,7 +58,132 @@ namespace TMAuto
             return queue.GetOffset(id);
         }
 
-        public Task GetBuildingTask(Village village)
+        public Task GetBuildingTask(Village village, QueuedBuilding queuedBuilding)
+        {
+            Task task = new Task();
+
+            Building building = village.Buildings[queuedBuilding.Id];
+
+            task.addOperation((r) =>
+            {
+                var nextLevelCost = Buildings.getNextLevelCost(queuedBuilding.Type, queuedBuilding.Level);
+
+                var rm = Regex.Match(r, "resources.storage = {.*?\"l1\": (\\d+).*?,\"l2\": (\\d+).*?,\"l3\": (\\d+).*?,\"l4\": (\\d+).*?};", RegexOptions.Singleline);
+                var freeCrop = int.Parse(Regex.Match(r, ",\"l5\":.*?(\\d+).*?};").Groups[1].Value);
+                var currentResources = new Resources() { Wood = int.Parse(rm.Groups[1].Value), Clay = int.Parse(rm.Groups[2].Value), Iron = int.Parse(rm.Groups[3].Value), Crop = int.Parse(rm.Groups[4].Value), FreeCrop = freeCrop };
+
+                if (currentResources >= nextLevelCost)
+                {
+                    Task.SelectBuilding(queuedBuilding.Id + 1);
+                }
+                else
+                {
+                    /**
+                    *
+                    * Build croplands?? [POSSIBLE_EDIT]
+                    *
+                    */
+                    LogManager.log(village, "Not enough resources to build " + building.Name);
+                    processResult();
+                }
+            });
+
+            Action<string> actionBuildNew = (r) =>
+            {
+                var node = r.GetDoc().DocumentNode.SelectSingleNode(String.Format("//button[@class='green new' and contains(@onclick,'a={0}')]", building.Type));
+
+                if (node != null)
+                {
+                    LogManager.log(village, "Building new " + building.Name);
+                    string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
+                    var bb = village.BuildingQueue.Remove(queuedBuilding);
+                    building.Offset = bb.Offset;
+                    Task.sendPost(url, new NameValueCollection());
+                }
+                else
+                {
+                    LogManager.log(village, "Cant build " + building.Name);
+                    processResult();
+                }
+            };
+
+            task.addOperation((r) =>
+            {
+                if (building.Type > 4 && building.Level == 0) //building new, not for res
+                {
+                    string category;
+
+                    switch (building.Type)
+                    {
+                        //RESOURCES
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                            category = "3";
+                            break;
+                        case 13:
+                        case 14:
+                        case 16:
+                        case 19:
+                        case 20:
+                        case 21:
+                        case 22:
+                        case 29:
+                        case 30:
+                        case 36:
+                        case 37:
+                            category = "2";
+                            break;
+                        case 31:
+                        case 32:
+                        case 33: // special, no need to switch to correct building type
+                        default:
+                            category = "1";
+                            break;
+                    }
+
+                    if (category == "1")
+                    {
+                        actionBuildNew(r);
+                    }
+                    else
+                    {
+                        //switch to correct buildings type
+                        task.addOperation((rr) =>
+                        {
+                            actionBuildNew(rr);
+                        });
+
+                        LogManager.log("switching category");
+                        Task.sendGet("build.php?id=" + (queuedBuilding.Id + 1) + "&category=" + category);
+                    }
+                }
+                else //upgrading building
+                {
+                    var node = r.GetDoc().DocumentNode.SelectSingleNode("//button[@class='green build']");
+                    //can build, green button
+                    if (node != null)
+                    {
+                        LogManager.log(village, "Upgrading " + building.Name + " to " + queuedBuilding.Level);
+                        string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
+                        var bb = village.BuildingQueue.Remove(queuedBuilding);
+                        building.Offset = bb.Offset;
+                        Task.sendPost(url, new NameValueCollection());
+                    }
+                    else
+                    {
+                        LogManager.log(village, "Cant build " + building.Name);
+                        processResult();
+                    }
+                }
+            });
+
+            return task;
+        }
+
+        public Task GetBuildingTaskForVillage(Village village)
         {
             Task task = new Task() { Name = "Build" };
 
@@ -72,7 +197,7 @@ namespace TMAuto
             List<QueuedBuilding> b = new List<QueuedBuilding>();
 
             //if roman => double queue check
-            if (player.Tribe == 1)
+            if (player.Tribe == Tribe.Romans)
             {
                 QueuedBuilding bRes = queue.Peek(BuildingType.Resource);
                 QueuedBuilding bBuild = queue.Peek(BuildingType.Building);
@@ -105,7 +230,6 @@ namespace TMAuto
                     QueuedBuilding queuedBuilding = b[buildingIndex];
                     Building building = village.Buildings[queuedBuilding.Id];
                     task.Name = "Build " + building.Name;
-                    var buildingIndexForThisLoop = buildingIndex;
 
                     bool freeQueue = ongoingBuildingQueue.Count == 0;
 
@@ -113,7 +237,7 @@ namespace TMAuto
                     if (!freeQueue)
                     {
                         //romans can dual build so check
-                        if (player.Tribe == 1)
+                        if (player.Tribe == Tribe.Romans)
                         {
                             //res id < 18, building id >= 18
                             freeQueue = (queuedBuilding.Id < 18 && ongoingBuildingQueue.Count(bq => bq.Id <= 18) == 0) || (queuedBuilding.Id >= 18 && ongoingBuildingQueue.Count(buq => buq.Id > 18) == 0);
@@ -122,124 +246,7 @@ namespace TMAuto
 
                     if (freeQueue)
                     {
-                        task.addOperation((rr) =>
-                        {
-                            task.addOperation((rrr) =>
-                            {
-                                var nextLevelCost = Buildings.getNextLevelCost(queuedBuilding.Type, queuedBuilding.Level);
-
-                                var rm = Regex.Match(rrr, "resources.storage = {.*?\"l1\": (\\d+).*?,\"l2\": (\\d+).*?,\"l3\": (\\d+).*?,\"l4\": (\\d+).*?};", RegexOptions.Singleline);
-                                var freeCrop = int.Parse(Regex.Match(rrr, ",\"l5\":.*?(\\d+).*?};").Groups[1].Value);
-                                var currentResources = new Resources() { Wood = int.Parse(rm.Groups[1].Value), Clay = int.Parse(rm.Groups[2].Value), Iron = int.Parse(rm.Groups[3].Value), Crop = int.Parse(rm.Groups[4].Value), FreeCrop = freeCrop };
-
-                                if (currentResources >= nextLevelCost)
-                                {
-                                    Task.sendGet("build.php?id=" + (queuedBuilding.Id + 1));
-                                } else
-                                {
-                                    /**
-                                    *
-                                    * Build croplands?? [POSSIBLE_EDIT]
-                                    *
-                                    */
-                                    LogManager.log(village, "Not enough resources to build " + building.Name);
-                                }
-                            });
-
-                            Action<string> actionBuildNew = (rrr) =>
-                            {
-                                var node = rrr.GetDoc().DocumentNode.SelectSingleNode(String.Format("//button[@class='green new' and contains(@onclick,'a={0}')]", building.Type));
-
-                                if (node != null)
-                                {
-                                    LogManager.log(village, "Building new " + building.Name);
-                                    string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
-                                    var bb = queue.Remove(queuedBuilding);
-                                    building.Offset = bb.Offset;
-                                    Task.sendPost(url, new NameValueCollection());
-                                }
-                                else
-                                {
-                                    LogManager.log(village, "Cant build " + building.Name);
-                                    processResult();
-                                }
-                            };
-
-                            task.addOperation((rrr) =>
-                            {
-                                if (building.Type > 4 && building.Level == 0) //building new, not for res
-                                {
-                                    string category;
-
-                                    switch (building.Type)
-                                    {
-                                        //RESOURCES
-                                        case 5:
-                                        case 6:
-                                        case 7:
-                                        case 8:
-                                        case 9:
-                                            category = "3";
-                                            break;
-                                        case 13:
-                                        case 14:
-                                        case 16:
-                                        case 19:
-                                        case 20:
-                                        case 21:
-                                        case 22:
-                                        case 29:
-                                        case 30:
-                                        case 36:
-                                        case 37:
-                                            category = "2";
-                                            break;
-                                        case 31:
-                                        case 32:
-                                        case 33: // special, no need to switch to correct building type
-                                        default:
-                                            category = "1";
-                                            break;
-                                    }
-
-                                    if (category == "1")
-                                    {
-                                        actionBuildNew(rrr);
-                                    }
-                                    else
-                                    {
-                                        //switch to correct buildings type
-                                        task.addOperation((rrrr) =>
-                                        {
-                                            actionBuildNew(rrrr);
-                                        });
-
-                                        LogManager.log("switching category");
-                                        Task.sendGet("build.php?id=" + (queuedBuilding.Id + 1) + "&category=" + category);
-                                    }
-                                }
-                                else //upgrading building
-                                {         
-                                    var node = rrr.GetDoc().DocumentNode.SelectSingleNode("//button[@class='green build']");
-                                    //can build, green button
-                                    if (node != null)
-                                    {
-                                        LogManager.log(village, "Upgrading " + building.Name + " to " + queuedBuilding.Level);
-                                        string url = Regex.Match(node.Attributes["onclick"].Value, "'(.*)'").Groups[1].Value;
-                                        var bb = queue.Remove(queuedBuilding);
-                                        building.Offset = bb.Offset;
-                                        Task.sendPost(url, new NameValueCollection());
-                                    }
-                                    else
-                                    {
-                                        LogManager.log(village, "Cant build " + building.Name);
-                                        processResult();
-                                    }
-                                }
-                            });
-
-                            processResult();
-                        });
+                        task.join(GetBuildingTask(village, queuedBuilding));
                     }
                 }
 

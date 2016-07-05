@@ -11,11 +11,9 @@ using System.Threading.Tasks;
 
 namespace TMAuto
 {
-    public enum BuildingType { Resource, Building }
+    public enum BuildingType { Resource, Building, Barracks = 19, Stables = 20, Workshop = 21 }
     static class Buildings
     {
-        private static string buildingsFolderPath = @"buildings";
-
         private static string[] names = new string[41] {
             "Woodcutter", "Clay Pit", "Iron Mine", "Cropland", "Sawmill",
             "Brickyard", "Iron Foundry", "Grain Mill", "Bakery", "Warehouse",
@@ -30,15 +28,15 @@ namespace TMAuto
 
         private static Resources[][] cost = new Resources[41][];
         private static TimeSpan[][] buildingTime = new TimeSpan[41][];
-
-        public static TimeSpan NextLevelBuildingTime(int type, int currentLevel)
+        private static double[] reducedTime = new double[] { 5, 1, 0.96, 0.93, 0.90, 0.86, 0.83, 0.80, 0.77, 0.75, 0.72, 0.69, 0.67, 0.64, 0.62, 0.6, 0.58, 0.56, 0.54, 0.52, 0.5 };
+        public static TimeSpan NextLevelBuildingTime(int type, int currentLevel, int mainBuildingLevel)
         {
-            return buildingTime[type - 1][currentLevel];
+            return TimeSpan.FromTicks(long.Parse((buildingTime[type - 1][currentLevel].Ticks * reducedTime[mainBuildingLevel]).ToString()));
         }
         public static Resources getNextLevelCost(int type, int nextLevel)
         {
             return cost[type - 1][nextLevel - 1];
-        }
+        } 
         public static int getMaxLevel(int type)
         {
             return 0;
@@ -46,7 +44,10 @@ namespace TMAuto
 
         public static Image GetImage(int type)
         {
-            return Image.FromFile(@"images\buildings\" + type + ".png").GetThumbnailImage(50, 50, null, IntPtr.Zero);
+            var assembly = Assembly.GetExecutingAssembly();
+            var image = Image.FromStream(assembly.GetManifestResourceStream("TMAuto.Images.Buildings." + type + ".png"));
+            var thumbnail = image.GetThumbnailImage(50, 50, null, IntPtr.Zero);
+            return thumbnail;
         }
       
         public static string GetName(int type)
@@ -78,7 +79,13 @@ namespace TMAuto
                     continue;
                 }
 
-                var lines = File.ReadAllLines(buildingsFolderPath + @"/" + (i + 1) + ".csv");
+                var assembly = Assembly.GetExecutingAssembly();
+                var file = assembly.GetManifestResourceStream("TMAuto.Resources.BuildingsInfo." + (i + 1) + ".csv");
+                string[] lines;
+                using (StreamReader reader = new StreamReader(file)) {
+                    lines = reader.ReadToEnd().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                }
+
                 var count = lines.Count();
                 cost[i] = new Resources[count];
                 buildingTime[i] = new TimeSpan[count];
@@ -93,7 +100,8 @@ namespace TMAuto
                     var time = values[5].Split(':').Select(v => { return int.Parse(v); }).ToArray();
                     var days = time[0] / 24;
                     var hours = time[0] % 24;
-                    buildingTime[i][j] = new TimeSpan(days, hours, time[1], time[2]);
+                    var timeSpan = new TimeSpan(days, hours, time[1], time[2]);
+                    buildingTime[i][j] = TimeSpan.FromTicks(timeSpan.Ticks / 3);
                 }
             }
         }

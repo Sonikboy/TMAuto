@@ -155,17 +155,9 @@ namespace TMAuto
                 for (int j = 0; j < village.Buildings.Length; j++)
                 {
                     Building b = village.Buildings[j];
+
                     Button button;
-
-                    if (b.Type == 0)
-                    {
-                        button = new Button { Size = new Size(50, 50), Text = (j + 1) + "" };
-                    }
-                    else
-                    {
-                        button = new Button { Image = b.BuildingImage, AutoSize = true };
-                    }
-
+                    button = new Button() { AutoSize = true };
                     button.Font = new Font(button.Font.Name, button.Font.Size, FontStyle.Bold);
                     
                     int id = j;
@@ -195,6 +187,7 @@ namespace TMAuto
                     });
 
                     button.DataBindings.Add("Text", b, "ButtonText");
+                    button.DataBindings.Add("Image", b, "BuildingImage");
 
                     if (j < 18)
                     {

@@ -75,6 +75,9 @@
     <Compile Include="BuildingManager.cs" />
     <Compile Include="Buildings.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="CustomTimer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Farm.cs" />
     <Compile Include="Hero.cs" />
@@ -107,6 +110,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UnitManager.cs" />
+    <Compile Include="Unit.cs" />
     <Compile Include="Village.cs" />
     <Compile Include="VillageManager.cs" />
     <EmbeddedResource Include="PickNewBuilding.resx">
@@ -136,6 +141,45 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\BuildingsInfo\1.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\10.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\11.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\13.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\14.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\15.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\16.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\17.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\18.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\19.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\2.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\20.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\21.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\22.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\23.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\24.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\25.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\26.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\27.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\28.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\29.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\3.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\30.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\31.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\32.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\33.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\34.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\35.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\36.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\37.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\38.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\39.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\4.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\41.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\5.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\6.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\7.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\8.csv" />
+    <EmbeddedResource Include="Resources\BuildingsInfo\9.csv" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -154,6 +198,54 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
+    <Folder Include="Images\Units\Gauls\" />
+    <Folder Include="Images\Units\Romans\" />
+    <Folder Include="Images\Units\Teutons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Buildings\1.png" />
+    <EmbeddedResource Include="Images\Buildings\10.png" />
+    <EmbeddedResource Include="Images\Buildings\11.png" />
+    <EmbeddedResource Include="Images\Buildings\13.png" />
+    <EmbeddedResource Include="Images\Buildings\14.png" />
+    <EmbeddedResource Include="Images\Buildings\15.png" />
+    <EmbeddedResource Include="Images\Buildings\16.png" />
+    <EmbeddedResource Include="Images\Buildings\17.png" />
+    <EmbeddedResource Include="Images\Buildings\18.png" />
+    <EmbeddedResource Include="Images\Buildings\19.png" />
+    <EmbeddedResource Include="Images\Buildings\2.png" />
+    <EmbeddedResource Include="Images\Buildings\20.png" />
+    <EmbeddedResource Include="Images\Buildings\21.png" />
+    <EmbeddedResource Include="Images\Buildings\22.png" />
+    <EmbeddedResource Include="Images\Buildings\23.png" />
+    <EmbeddedResource Include="Images\Buildings\24.png" />
+    <EmbeddedResource Include="Images\Buildings\25.png" />
+    <EmbeddedResource Include="Images\Buildings\26.png" />
+    <EmbeddedResource Include="Images\Buildings\27.png" />
+    <EmbeddedResource Include="Images\Buildings\28.png" />
+    <EmbeddedResource Include="Images\Buildings\29.png" />
+    <EmbeddedResource Include="Images\Buildings\3.png" />
+    <EmbeddedResource Include="Images\Buildings\30.png" />
+    <EmbeddedResource Include="Images\Buildings\31.png" />
+    <EmbeddedResource Include="Images\Buildings\32.png" />
+    <EmbeddedResource Include="Images\Buildings\33.png" />
+    <EmbeddedResource Include="Images\Buildings\34.png" />
+    <EmbeddedResource Include="Images\Buildings\35.png" />
+    <EmbeddedResource Include="Images\Buildings\36.png" />
+    <EmbeddedResource Include="Images\Buildings\37.png" />
+    <EmbeddedResource Include="Images\Buildings\38.png" />
+    <EmbeddedResource Include="Images\Buildings\39.png" />
+    <EmbeddedResource Include="Images\Buildings\4.png" />
+    <EmbeddedResource Include="Images\Buildings\40.png" />
+    <EmbeddedResource Include="Images\Buildings\41.png" />
+    <EmbeddedResource Include="Images\Buildings\5.png" />
+    <EmbeddedResource Include="Images\Buildings\6.png" />
+    <EmbeddedResource Include="Images\Buildings\7.png" />
+    <EmbeddedResource Include="Images\Buildings\8.png" />
+    <EmbeddedResource Include="Images\Buildings\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Buildings\0.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

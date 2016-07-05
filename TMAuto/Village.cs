@@ -20,16 +20,17 @@ namespace TMAuto
         public int Warehouse { get; set; }
         public int Granary { get; set; }
 
-        public int WoodProduction { get; set; }
-        public int ClayProduction { get; set; }
-        public int IronProduction { get; set; }
-        public int CropProduction { get; set; }
+        public Resources Production { get; set; }
         public int FreeCrop { get; set; }
 
         public bool Capital { get; set; }
         public int Loyalty { get; set; }
 
         public Building[] Buildings { get; }
+        public Building Barracks { get { return ArmyBuilding(BuildingType.Barracks); } }
+        public Building Stables { get { return ArmyBuilding(BuildingType.Stables); } }
+        public Building Workshop { get { return ArmyBuilding(BuildingType.Workshop); } }
+        public Building ArmyBuilding(BuildingType type) { return Buildings.FirstOrDefault(b => b.Type == (int)type); }
         public Army ArmyTotal { get; }
         public Army ArmyAvailable { get; }
 
@@ -49,7 +50,7 @@ namespace TMAuto
 
             for (int i = 0; i < 40; i++)
             {
-                Buildings[i] = new Building();
+                Buildings[i] = new Building() { IngameId = (i + 1) };
             }
         }
 
@@ -70,6 +71,11 @@ namespace TMAuto
         {
             OngoingQueue.Clear();
             OngoingQueue.AddRange(ongoingQueue);
+
+            for (int i = 0; i < 40; i++)
+            {
+                Buildings[i].OnGoing = 0;
+            }
 
             for (int i = 0; i < ongoingQueue.Count; i++)
             {

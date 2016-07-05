@@ -11,10 +11,20 @@ namespace TMAuto
     class HeroManager
     {
         private Action processResult;
+        private Hero hero = Hero.Instance;
 
+        public bool DoAdventure { get; set; }
+
+        private CustomTimer adventureTimer;
         public HeroManager(Action processResult)
         {
             this.processResult = processResult;
+            DoAdventure = hero.AdventureMode != Mode.NONE;
+            adventureTimer = new CustomTimer(60 * 8, 60 * 13);
+            adventureTimer.Elapsed += new System.Timers.ElapsedEventHandler((sender, e) => {
+                if (hero.AdventureMode != Mode.NONE) { DoAdventure = true; }
+            });
+            adventureTimer.Start();
         }
 
         public Task GetCheckHeroTask()
@@ -30,7 +40,6 @@ namespace TMAuto
             {
                 //analyze adventures, send hero if can
                 LogManager.log("Checking hero status");
-                Hero hero = Hero.Instance;
                 var node = r.GetDoc().DocumentNode;
 
                 string health = node.SelectSingleNode("//img[@class='injury']").NextSibling.NextSibling.Attributes["style"].Value;
@@ -62,11 +71,12 @@ namespace TMAuto
                         }
                     }
 
-                    var adventureNodes = node.SelectNodes(xpath).Where(n => n.SelectSingleNode("./td[@class='moveTime']").InnerText.Trim().CompareTo(maxTravelTime) <= 0);
-                    int count = adventureNodes.Count();
-
-                    if (count > 0)
+                    var adventureNodes = node.SelectNodes(xpath).Where(b => true);
+                    
+                    if (adventureNodes != null)
                     {
+                        adventureNodes = adventureNodes.Where(n => n.SelectSingleNode("./td[@class='moveTime']").InnerText.Trim().CompareTo(maxTravelTime) <= 0);
+                        int count = adventureNodes.Count();
                         int adventureIndex;
                         //if adventures present
                         switch (hero.AdventureMode)
@@ -124,6 +134,7 @@ namespace TMAuto
                             content.Add(sendButtonNode.Attributes["name"].Value, sendButtonNode.Attributes["value"].Value);
 
                             LogManager.log("Sending hero to adventure");
+                            DoAdventure = false;
                             Task.sendPost("start_adventure.php", content);
                         });
                         

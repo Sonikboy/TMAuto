@@ -22,7 +22,8 @@ namespace TMAuto
 
             task.addOperation((r) =>
             {
-                player.Tribe = int.Parse(Regex.Match(r, "nation nation(.)").Groups[1].Value);
+                System.IO.File.WriteAllText(@"C:\Users\Radac\Desktop\lol.html", r);
+                player.Tribe = (Tribe)int.Parse(Regex.Match(r, "nation nation(.)").Groups[1].Value);
                 var nodes = r.GetDoc().DocumentNode.SelectNodes("//a[contains(@href, 'newdid')]");
 
                 var newVillages = nodes.Select(n =>

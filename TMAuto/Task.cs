@@ -65,13 +65,18 @@ namespace TMAuto
 
         private static string addUrl(string path)
         {
-            return "http://" + Settings.Instance.Server + "/" + path;
+            return Settings.Instance.Server + path;
         }
 
         public static void SwitchVillage(Village village)
         {
             LogManager.log("Switching to " + village);
             sendGet("dorf1.php?newdid=" + village.Id + "&");
+        }
+
+        public static void SelectBuilding(int buildingId)
+        {
+            sendGet("build.php?id=" + buildingId);
         }
 
         //returns queue
